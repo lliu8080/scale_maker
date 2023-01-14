@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage("scm") {
       steps {
-        git(url: "git@nuc.lliu.ca:app/weather_app_fiber.git", branch: "master", poll: true)
+        git(url: "git@nuc.lliu.ca:app/scale_maker.git", branch: "master", poll: true)
       }
     }
 
@@ -30,7 +30,7 @@ pipeline {
     // }
     stage("Build Docker Image") {
       steps {
-        sh "docker build -t nuc.lliu.ca/lliu/weather_app_fiber:${BUILD_NUMBER} ."
+        sh "docker build -t nuc.lliu.ca/lliu/scale_maker:${BUILD_NUMBER} ."
       } 
     }
     stage("Docker Login and Push") {
@@ -38,7 +38,7 @@ pipeline {
         withCredentials([string(credentialsId: "dockerHubPass", variable: "dockerHubPass")]) {
           sh "docker login nuc.lliu.ca -u lliu -p $dockerHubPass"
         }
-        sh "docker push nuc.lliu.ca/lliu/weather_app_fiber:${BUILD_NUMBER}"
+        sh "docker push nuc.lliu.ca/lliu/scale_maker:${BUILD_NUMBER}"
       }
     }
     stage('Build Completed') {
