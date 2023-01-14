@@ -3,7 +3,7 @@ ARG almalinux_version=9
 FROM golang:$go_image_version AS build
 
 # Building the binary of the App
-WORKDIR /go/src/weather_app_fiber
+WORKDIR /go/src/scale_maker
 
 # Copy all the Code and stuff to compile everything
 COPY . .
@@ -24,7 +24,7 @@ RUN mkdir ./assets
 COPY ./assets ./assets
 
 # Copy app binary from build image.
-COPY --from=build /go/src/weather_app_fiber/app .
+COPY --from=build /go/src/scale_maker/app .
 
 # Exposes port 3000 because our program listens on that port
 EXPOSE 3000
