@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage("scm") {
       steps {
-        git(url: "git@nuc.lliu.ca:app/scale_maker.git", branch: "master", poll: true)
+        git(url: "git@nuc.lliu.ca:app/scale_maker.git", branch: "main", poll: true)
       }
     }
 
