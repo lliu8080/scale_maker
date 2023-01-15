@@ -15,7 +15,7 @@ pipeline {
       steps {
         sh 'pwd'
         sh 'ls -al'
-        //sh 'make test'
+        sh 'make test'
       }
     }
     // stage("coverage") {
