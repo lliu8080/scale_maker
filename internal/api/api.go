@@ -58,7 +58,7 @@ func setupRoutes(app *fiber.App) {
 	app.Use(NotFound, recover.New(), prometheus.Middleware)
 	k8s_client, _ := newK8SClient()
 	app.Use(func(c *fiber.Ctx) error {
-		c.Locals("k8s_client", k8s_client)
+		SetLocal[kubernetes.Interface](c, "k8s_client", k8s_client)
 		return c.Next()
 	})
 }
