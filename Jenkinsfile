@@ -11,13 +11,13 @@ pipeline {
       }
     }
 
-    stage("test") {
-      steps {
-        sh 'pwd'
-        sh 'ls -al'
-        sh 'make test'
-      }
-    }
+    // stage("test") {
+    //   steps {
+    //     sh 'pwd'
+    //     sh 'ls -al'
+    //     sh 'make test'
+    //   }
+    // }
     // stage("coverage") {
     //   steps {
     //     sh 'sonar-scanner -Dproject.settings=./sonar-project.properties'

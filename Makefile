@@ -3,21 +3,16 @@ APP_VERSION=0.0.1
 NUC_DOCKER_REGISTRY=nuc.lliu.ca
 
 build:
-	export CGO_ENABLED=0
 	go build  ./main.go
 doc:
 	swag init
 run:
-	export CGO_ENABLED=0
 	go run ./main.go
 test:
-	export CGO_ENABLED=0
 	go test ./...
 testv:
-	export CGO_ENABLED=0
 	go test ./... -v -cover
 cov:
-	export CGO_ENABLED=0
 	go test ./... -coverprofile cp.out
 	go tool cover -html=cp.out
 rpm:
