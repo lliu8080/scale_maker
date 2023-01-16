@@ -6,12 +6,10 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
 )
 
 // ListNamespace
 func ListNamespace(c *fiber.Ctx) error {
-	k8s_client := GetLocal[kubernetes.Interface](c, "k8s_client")
 	if k8s_client == nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": http.StatusInternalServerError, "message": "Error initialize k8s client!"})
 	}

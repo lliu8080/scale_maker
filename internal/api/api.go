@@ -12,6 +12,8 @@ import (
 	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
 )
 
+var k8s_client kubernetes.Interface
+
 func newK8SClient() (kubernetes.Interface, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
@@ -22,16 +24,17 @@ func newK8SClient() (kubernetes.Interface, error) {
 
 }
 
-func SetLocal[T any](c *fiber.Ctx, key string, value T) {
-	c.Locals(key, value)
-}
+// func SetLocal[T any](c *fiber.Ctx, key string, value T) {
+// 	c.Locals(key, value)
+// }
 
-func GetLocal[T any](c *fiber.Ctx, key string) T {
-	return c.Locals(key).(T)
-}
+// func GetLocal[T any](c *fiber.Ctx, key string) T {
+// 	return c.Locals(key).(T)
+// }
 
 func setupRoutes(app *fiber.App) {
 
+	//var err error
 	// Create a /api/v1 endpoint
 	v1 := app.Group("/api/v1")
 	// file, err := os.OpenFile("./item.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
@@ -54,13 +57,16 @@ func setupRoutes(app *fiber.App) {
 
 	app.Static("/favicon.ico", "./assets/static/img/favicon.ico")
 	app.Get("/docs/*", swagger.HandlerDefault)
-	app.Use(logger.New())
 	app.Use(NotFound, recover.New(), prometheus.Middleware)
-	k8s_client, _ := newK8SClient()
-	app.Use(func(c *fiber.Ctx) error {
-		SetLocal[kubernetes.Interface](c, "k8s_client", k8s_client)
-		return c.Next()
-	})
+	app.Use(logger.New())
+	k8s_client, _ = newK8SClient()
+	// if err != nil {
+	// 	log.Fatal("Error: cannot connect to the k8s cluster and initialize the client!")
+	// }
+	// app.Use(func(c *fiber.Ctx) error {
+	// 	SetLocal[kubernetes.Interface](c, "k8s_client", k8s_client)
+	// 	return c.Next()
+	// })
 }
 
 func setupApp() *fiber.App {
