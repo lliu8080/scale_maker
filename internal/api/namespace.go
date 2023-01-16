@@ -18,7 +18,13 @@ func ListNamespace(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": http.StatusInternalServerError, "message": "Error getting result when trying to list pods!"})
 	}
-	return c.Status(200).JSON(fiber.Map{
-		"namespaces": nsList,
+	nss := make([]string, 0, len(nsList.Items))
+	for _, ns := range nsList.Items {
+		nss = append(nss, ns.Name)
+	}
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status":         http.StatusOK,
+		"number_of_pods": len(nsList.Items),
+		"namespaces":     nss,
 	})
 }
