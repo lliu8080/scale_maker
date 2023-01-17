@@ -52,11 +52,14 @@ func setupRoutesandApp(app *fiber.App, testing bool) {
 	// }
 	// defer file.Close()
 
+	// namespace related APIs
+	v1.Get("/namespace", ListNamespace)
+
 	// pod related APIs
 	v1.Get("/pod", ListPod)
 
-	// namespace related APIs
-	v1.Get("/namespace", ListNamespace)
+	// deployment related APIs
+	v1.Get("/deployment", ListDeployment)
 
 	// Bind handlers
 	v1.Get("/ping", GetStatus)

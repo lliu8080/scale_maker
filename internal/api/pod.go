@@ -25,7 +25,7 @@ func ListPod(c *fiber.Ctx) error {
 	list, err := util.ListDynamicK8SObjectByNames(
 		k8sClients.ctx,
 		k8sClients.dynamicClient,
-		"apps",
+		"",
 		"v1",
 		"pod",
 		namespace,
