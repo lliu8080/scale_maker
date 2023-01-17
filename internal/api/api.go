@@ -1,38 +1,47 @@
 package api
 
 import (
+	"context"
+	"log"
+
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
+	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
 	_ "nuc.lliu.ca/gitea/app/scale_maker/docs"
 	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
+	ctrl "sigs.k8s.io/controller-runtime"
 )
 
-var k8s_client kubernetes.Interface
-
-func newK8SClient() (kubernetes.Interface, error) {
-	config, err := rest.InClusterConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	return kubernetes.NewForConfig(config)
-
+type k8sClinet struct {
+	clientSet     kubernetes.Interface //*kubernetes.Clientset or fake
+	dynamicClient dynamic.Interface    //*dynamic.DynamicClient or fake
+	ctx           context.Context
 }
 
-// func SetLocal[T any](c *fiber.Ctx, key string, value T) {
-// 	c.Locals(key, value)
-// }
+var k8sClients k8sClinet
 
-// func GetLocal[T any](c *fiber.Ctx, key string) T {
-// 	return c.Locals(key).(T)
-// }
+func newK8SClient() {
+	var err error
+	// config, err := rest.InClusterConfig()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-func setupRoutes(app *fiber.App) {
+	// return kubernetes.NewForConfig(config)
+	k8sClients.ctx = context.Background()
+	config := ctrl.GetConfigOrDie()
+	k8sClients.clientSet, err = kubernetes.NewForConfig(config)
+	if err != nil {
+		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
+	}
+	k8sClients.dynamicClient = dynamic.NewForConfigOrDie(config)
+}
+
+func setupRoutesandApp(app *fiber.App, testing bool) {
 
 	//var err error
 	// Create a /api/v1 endpoint
@@ -42,9 +51,6 @@ func setupRoutes(app *fiber.App) {
 	// 	panic(err)
 	// }
 	// defer file.Close()
-
-	prometheus := fiberprometheus.New("scale_maker")
-	prometheus.RegisterAt(app, "/metrics")
 
 	// pod related APIs
 	v1.Get("/pod", ListPod)
@@ -57,9 +63,7 @@ func setupRoutes(app *fiber.App) {
 
 	app.Static("/favicon.ico", "./assets/static/img/favicon.ico")
 	app.Get("/docs/*", swagger.HandlerDefault)
-	app.Use(NotFound, recover.New(), prometheus.Middleware)
-	app.Use(logger.New())
-	k8s_client, _ = newK8SClient()
+
 	// if err != nil {
 	// 	log.Fatal("Error: cannot connect to the k8s cluster and initialize the client!")
 	// }
@@ -67,28 +71,27 @@ func setupRoutes(app *fiber.App) {
 	// 	SetLocal[kubernetes.Interface](c, "k8s_client", k8s_client)
 	// 	return c.Next()
 	// })
+	// Skip registering prometheus metrics if testing
+	if !testing {
+		prometheus := fiberprometheus.New("scale_maker")
+		prometheus.RegisterAt(app, "/metrics")
+		app.Use(prometheus.Middleware)
+		app.Use(NotFound, recover.New())
+		app.Use(logger.New())
+	}
 }
 
-func setupApp() *fiber.App {
+// InitialSetup doc
+func InitialSetup() *fiber.App {
 	config.NewConfig()
 	conf := config.AppConfig
 	// Create fiber app
 	app := fiber.New(fiber.Config{
 		Prefork: conf.Prod, // go run app.go -prod
 	})
-
-	setupRoutes(app)
+	newK8SClient()
+	setupRoutesandApp(app, false)
 
 	// Return the configured app
 	return app
-}
-
-func InitialSetup() *fiber.App {
-	// dbUser := "test"
-	// dbPass := "test"
-	// dbName := "weather_app"
-	// dbHostName := "postgresql-weather_app_fiber"
-	// dbPort := "5432"
-	// config.InitDatabase(dbUser, dbPass, dbName, dbHostName, dbPort)
-	return setupApp()
 }

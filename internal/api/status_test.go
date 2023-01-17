@@ -27,7 +27,7 @@ func TestPingSuccess(t *testing.T) {
 		},
 	}
 
-	app := InitialSetup()
+	app := InitialTestSetup()
 
 	util.RunAPITests(t, app, &tests)
 }

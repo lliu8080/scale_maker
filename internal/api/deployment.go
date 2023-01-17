@@ -7,8 +7,8 @@ import (
 	"nuc.lliu.ca/gitea/app/scale_maker/internal/util"
 )
 
-// ListPod doc
-func ListPod(c *fiber.Ctx) error {
+// ListDeployment doc
+func ListDeployment(c *fiber.Ctx) error {
 	namespace := c.Query("namespace")
 	if namespace == "" {
 		namespace = "default"
@@ -27,7 +27,7 @@ func ListPod(c *fiber.Ctx) error {
 		k8sClients.dynamicClient,
 		"apps",
 		"v1",
-		"pod",
+		"deployment",
 		namespace,
 	)
 	if err != nil {
