@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -27,10 +29,12 @@ func ListDeployment(c *fiber.Ctx) error {
 		k8sClients.dynamicClient,
 		"apps",
 		"v1",
-		"deployment",
+		"deployments",
 		namespace,
 	)
 	if err != nil {
+		log.Println("Error: failed create dynamic pod with error " + err.Error())
+		fmt.Println("Error: failed create dynamic pod with error " + err.Error())
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
 				"status":  http.StatusInternalServerError,
