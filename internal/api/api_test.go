@@ -26,12 +26,12 @@ func newK8STestClient() {
 	// }
 
 	// return kubernetes.NewForConfig(config)
-	k8sClients.ctx = context.Background()
-	k8sClients.clientSet = fakek8s.NewSimpleClientset()
+	kc.ctx = context.Background()
+	kc.clientSet = fakek8s.NewSimpleClientset()
 	if err != nil {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
-	k8sClients.dynamicClient = fakeDynamic.NewSimpleDynamicClient(runtime.NewScheme())
+	kc.dynamicClient = fakeDynamic.NewSimpleDynamicClient(runtime.NewScheme())
 }
 
 // InitialSetup doc

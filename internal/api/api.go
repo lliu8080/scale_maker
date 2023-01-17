@@ -22,7 +22,7 @@ type k8sClinet struct {
 	ctx           context.Context
 }
 
-var k8sClients k8sClinet
+var kc k8sClinet
 
 func newK8SClient() {
 	var err error
@@ -32,13 +32,13 @@ func newK8SClient() {
 	// }
 
 	// return kubernetes.NewForConfig(config)
-	k8sClients.ctx = context.Background()
+	kc.ctx = context.Background()
 	config := ctrl.GetConfigOrDie()
-	k8sClients.clientSet, err = kubernetes.NewForConfig(config)
+	kc.clientSet, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
-	k8sClients.dynamicClient = dynamic.NewForConfigOrDie(config)
+	kc.dynamicClient = dynamic.NewForConfigOrDie(config)
 }
 
 func setupRoutesandApp(app *fiber.App, testing bool) {
@@ -53,16 +53,22 @@ func setupRoutesandApp(app *fiber.App, testing bool) {
 	// defer file.Close()
 
 	// namespace related APIs
-	v1.Get("/namespace", ListNamespace)
+	v1.Get("/namespace", listNamespace)
 
-	// pod related APIs
-	v1.Get("/pod", ListPod)
+	//node related APIs
+	v1.Get("/node", listNode)
 
 	// deployment related APIs
-	v1.Get("/deployment", ListDeployment)
+	v1.Get("/daemonset", listDaemonset)
+
+	// deployment related APIs
+	v1.Get("/deployment", listDeployment)
+
+	// pod related APIs
+	v1.Get("/pod", listPod)
 
 	// Bind handlers
-	v1.Get("/ping", GetStatus)
+	v1.Get("/ping", getStatus)
 
 	app.Static("/favicon.ico", "./assets/static/img/favicon.ico")
 	app.Get("/docs/*", swagger.HandlerDefault)

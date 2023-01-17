@@ -1,51 +1,12 @@
 package api
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
 	"github.com/gofiber/fiber/v2"
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/util"
 )
 
-// ListPod doc
-func ListPod(c *fiber.Ctx) error {
+// listPod doc
+func listPod(c *fiber.Ctx) error {
+	resource := "pods"
 	namespace := c.Query("namespace")
-	if namespace == "" {
-		namespace = "default"
-	}
-	if k8sClients.dynamicClient == nil {
-		return c.Status(http.StatusInternalServerError).JSON(
-			fiber.Map{
-				"status":  http.StatusInternalServerError,
-				"message": "Error initialize k8s client!",
-			},
-		)
-	}
-
-	list, err := util.ListDynamicK8SObjectByNames(
-		k8sClients.ctx,
-		k8sClients.dynamicClient,
-		"",
-		"v1",
-		"pods",
-		namespace,
-	)
-	if err != nil {
-		log.Println("Error: failed create dynamic pod with error " + err.Error())
-		fmt.Println("Error: failed create dynamic pod with error " + err.Error())
-		return c.Status(http.StatusInternalServerError).JSON(
-			fiber.Map{
-				"status":  http.StatusInternalServerError,
-				"message": "Error getting result when trying to list pods!",
-			},
-		)
-	}
-	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"status":         http.StatusOK,
-		"namespace":      namespace,
-		"number_of_pods": len(list),
-		"pods":           list,
-	})
+	return listResources(c, "", "v1", resource, namespace)
 }
