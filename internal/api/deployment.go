@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// listDeployment doc
+// listDeployments doc
 func listDeployments(c *fiber.Ctx) error {
 	resource := "deployments"
 	namespace := c.Query("namespace")

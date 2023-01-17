@@ -7,7 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// listNamespace doc
+// listNamespaces doc
 func listNamespaces(c *fiber.Ctx) error {
 	if kc.clientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(

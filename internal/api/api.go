@@ -42,15 +42,15 @@ func newK8SClient() {
 }
 
 func setupRoutesandApp(app *fiber.App, testing bool) {
-
-	//var err error
-	// Create a /api/v1 endpoint
-	v1 := app.Group("/api/v1")
 	// file, err := os.OpenFile("./item.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	// if err != nil {
 	// 	panic(err)
 	// }
 	// defer file.Close()
+	//var err error
+
+	// Create a /api/v1 endpoint
+	v1 := app.Group("/api/v1")
 
 	// namespace related APIs
 	v1.Get("/namespaces", listNamespaces)
@@ -69,6 +69,9 @@ func setupRoutesandApp(app *fiber.App, testing bool) {
 
 	// service related APIs
 	v1.Get("/services", listServices)
+
+	// statefulset related APIs
+	v1.Get("/statefulsets", listStatefulsets)
 
 	// Bind handlers
 	v1.Get("/ping", getStatus)

@@ -7,7 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// listNode doc
+// listNodes doc
 func listNodes(c *fiber.Ctx) error {
 	if kc.clientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(

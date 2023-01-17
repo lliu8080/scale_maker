@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// listPod doc
+// listPods doc
 func listPods(c *fiber.Ctx) error {
 	resource := "pods"
 	namespace := c.Query("namespace")

@@ -2,7 +2,7 @@ package api
 
 import "github.com/gofiber/fiber/v2"
 
-// listService doc
+// listServices doc
 func listServices(c *fiber.Ctx) error {
 	resource := "services"
 	namespace := c.Query("namespace")
