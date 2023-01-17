@@ -62,9 +62,9 @@ func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
 		Version:  version,
 		Resource: resource,
 	}
+
 	list, err := dynamic.Resource(resourceID).Namespace(namespace).
 		List(ctx, metav1.ListOptions{})
-
 	if err != nil {
 		return nil, err
 	}
@@ -81,9 +81,11 @@ func listDynamicK8SObjectByNames(ctx context.Context, dynamic dynamic.Interface,
 	if err != nil {
 		return nil, err
 	}
+
 	results := make([]string, 0, len(items))
 	for _, item := range items {
 		results = append(results, item.GetName())
 	}
+
 	return results, nil
 }

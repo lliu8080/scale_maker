@@ -5,7 +5,7 @@ import (
 )
 
 // listPod doc
-func listPod(c *fiber.Ctx) error {
+func listPods(c *fiber.Ctx) error {
 	resource := "pods"
 	namespace := c.Query("namespace")
 	return listResources(c, "", "v1", resource, namespace)

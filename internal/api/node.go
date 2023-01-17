@@ -8,7 +8,7 @@ import (
 )
 
 // listNode doc
-func listNode(c *fiber.Ctx) error {
+func listNodes(c *fiber.Ctx) error {
 	if kc.clientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{

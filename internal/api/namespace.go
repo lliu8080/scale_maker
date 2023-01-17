@@ -8,7 +8,7 @@ import (
 )
 
 // listNamespace doc
-func listNamespace(c *fiber.Ctx) error {
+func listNamespaces(c *fiber.Ctx) error {
 	if kc.clientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
@@ -28,10 +28,12 @@ func listNamespace(c *fiber.Ctx) error {
 			},
 		)
 	}
+
 	nss := make([]string, 0, len(nsList.Items))
 	for _, ns := range nsList.Items {
 		nss = append(nss, ns.Name)
 	}
+
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status":               http.StatusOK,
 		"number_of_namespaces": len(nsList.Items),

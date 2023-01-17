@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/swagger"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
-	_ "nuc.lliu.ca/gitea/app/scale_maker/docs"
+	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // doc import for swagger
 	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
@@ -53,19 +53,22 @@ func setupRoutesandApp(app *fiber.App, testing bool) {
 	// defer file.Close()
 
 	// namespace related APIs
-	v1.Get("/namespace", listNamespace)
+	v1.Get("/namespaces", listNamespaces)
 
 	//node related APIs
-	v1.Get("/node", listNode)
+	v1.Get("/nodes", listNodes)
 
 	// deployment related APIs
-	v1.Get("/daemonset", listDaemonset)
+	v1.Get("/daemonsets", listDaemonsets)
 
 	// deployment related APIs
-	v1.Get("/deployment", listDeployment)
+	v1.Get("/deployments", listDeployments)
 
 	// pod related APIs
-	v1.Get("/pod", listPod)
+	v1.Get("/pods", listPods)
+
+	// service related APIs
+	v1.Get("/services", listServices)
 
 	// Bind handlers
 	v1.Get("/ping", getStatus)
