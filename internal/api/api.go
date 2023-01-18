@@ -1,13 +1,10 @@
 package api
 
 import (
-	"bytes"
 	"context"
-	"io/ioutil"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	yamlutil "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // doc import for swagger
@@ -46,15 +43,15 @@ func newK8SClient() {
 	kc.dynamicClient = dynamic.NewForConfigOrDie(config)
 }
 
-func loadDefaultK8STemplates() {
-	//var err error
-	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
-	cpuLoadTestPodFile, err := ioutil.ReadFile(cpuLoadTestPodTemplate)
-	if err != nil {
-		log.Fatal("Error: can not load cpuLoadTestPodTemplate with error " + err.Error())
-	}
-	kt.cpuLoadTestPod = yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(cpuLoadTestPodFile), 100)
-}
+// func loadDefaultK8STemplates() {
+// 	//var err error
+// 	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
+// 	cpuLoadTestPodFile, err := ioutil.ReadFile(cpuLoadTestPodTemplate)
+// 	if err != nil {
+// 		log.Fatal("Error: can not load cpuLoadTestPodTemplate with error " + err.Error())
+// 	}
+// 	kt.cpuLoadTestPod = yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(cpuLoadTestPodFile), 100)
+// }
 
 // InitialSetup doc
 func InitialSetup() *fiber.App {
