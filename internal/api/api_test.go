@@ -43,7 +43,7 @@ func InitialTestSetup() *fiber.App {
 		Prefork: conf.Prod, // go run app.go -prod
 	})
 	newK8STestClient()
-	setupRoutesandApp(app, true)
+	setupRoutesandMiddleware(app, true)
 
 	// Return the configured app
 	return app

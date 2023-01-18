@@ -1,14 +1,13 @@
 package api
 
 import (
+	"bytes"
 	"context"
+	"io/ioutil"
 	"log"
 
-	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/swagger"
+	yamlutil "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // doc import for swagger
@@ -22,7 +21,12 @@ type k8sClinet struct {
 	ctx           context.Context
 }
 
+type k8sTemplates struct {
+	cpuLoadTestPod *yamlutil.YAMLOrJSONDecoder
+}
+
 var kc k8sClinet
+var kt k8sTemplates
 
 func newK8SClient() {
 	var err error
@@ -41,59 +45,14 @@ func newK8SClient() {
 	kc.dynamicClient = dynamic.NewForConfigOrDie(config)
 }
 
-func setupRoutesandApp(app *fiber.App, testing bool) {
-	// file, err := os.OpenFile("./item.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer file.Close()
+func loadDefaultK8STemplates() {
 	//var err error
-
-	// Create a /api/v1 endpoint
-	v1 := app.Group("/api/v1")
-
-	// namespace related APIs
-	v1.Get("/namespaces", listNamespaces)
-
-	//node related APIs
-	v1.Get("/nodes", listNodes)
-
-	// deployment related APIs
-	v1.Get("/daemonsets", listDaemonsets)
-
-	// deployment related APIs
-	v1.Get("/deployments", listDeployments)
-
-	// pod related APIs
-	v1.Get("/pods", listPods)
-
-	// service related APIs
-	v1.Get("/services", listServices)
-
-	// statefulset related APIs
-	v1.Get("/statefulsets", listStatefulsets)
-
-	// Bind handlers
-	v1.Get("/ping", getStatus)
-
-	app.Static("/favicon.ico", "./assets/static/img/favicon.ico")
-	app.Get("/docs/*", swagger.HandlerDefault)
-
-	// if err != nil {
-	// 	log.Fatal("Error: cannot connect to the k8s cluster and initialize the client!")
-	// }
-	// app.Use(func(c *fiber.Ctx) error {
-	// 	SetLocal[kubernetes.Interface](c, "k8s_client", k8s_client)
-	// 	return c.Next()
-	// })
-	// Skip registering prometheus metrics if testing
-	if !testing {
-		prometheus := fiberprometheus.New("scale_maker")
-		prometheus.RegisterAt(app, "/metrics")
-		app.Use(prometheus.Middleware)
-		app.Use(NotFound, recover.New())
-		app.Use(logger.New())
+	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
+	cpuLoadTestPodFile, err := ioutil.ReadFile(cpuLoadTestPodTemplate)
+	if err != nil {
+		log.Fatal("Error: can not load cpuLoadTestPodTemplate with error " + err.Error())
 	}
+	kt.cpuLoadTestPod = yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(cpuLoadTestPodFile), 100)
 }
 
 // InitialSetup doc
@@ -104,8 +63,8 @@ func InitialSetup() *fiber.App {
 	app := fiber.New(fiber.Config{
 		Prefork: conf.Prod, // go run app.go -prod
 	})
-	newK8SClient()
-	setupRoutesandApp(app, false)
+	// newK8SClient()
+	setupRoutesandMiddleware(app, false)
 
 	// Return the configured app
 	return app
