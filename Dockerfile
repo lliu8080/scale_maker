@@ -24,6 +24,7 @@ RUN dnf -y update
 # Create the `public` dir and copy all the assets into it
 RUN mkdir ./assets
 COPY ./assets ./assets
+COPY ./templates ./templates
 
 # Copy app binary from build image.
 COPY --from=build /go/src/scale_maker/app .

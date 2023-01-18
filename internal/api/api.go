@@ -21,12 +21,13 @@ type k8sClinet struct {
 	ctx           context.Context
 }
 
-type k8sTemplates struct {
-	cpuLoadTestPod *yamlutil.YAMLOrJSONDecoder
-}
+// type k8sTemplates struct {
+// 	cpuLoadTestPod *yamlutil.YAMLOrJSONDecoder
+// }
 
 var kc k8sClinet
-var kt k8sTemplates
+
+// var kt k8sTemplates
 
 func newK8SClient() {
 	var err error

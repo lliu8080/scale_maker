@@ -1,7 +1,9 @@
 package api
 
 import (
+	"bytes"
 	"context"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -11,6 +13,7 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/serializer/yaml"
+	yamlutil "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/restmapper"
 )
@@ -23,9 +26,15 @@ func listPods(c *fiber.Ctx) error {
 }
 
 func createPod(c *fiber.Ctx) error {
+	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
 	var rawObj runtime.RawExtension
-	var err error
-	if err = kt.cpuLoadTestPod.Decode(&rawObj); err != nil {
+	cpuLoadTestPodFile, err := ioutil.ReadFile(cpuLoadTestPodTemplate)
+	if err != nil {
+		log.Fatal("Error: can not load cpuLoadTestPodTemplate with error " + err.Error())
+	}
+	decodedFile := yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(cpuLoadTestPodFile), 100)
+
+	if err = decodedFile.Decode(&rawObj); err != nil {
 		log.Println(err.Error())
 	}
 
