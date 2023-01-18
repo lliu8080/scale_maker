@@ -63,7 +63,7 @@ func InitialSetup() *fiber.App {
 	app := fiber.New(fiber.Config{
 		Prefork: conf.Prod, // go run app.go -prod
 	})
-	// newK8SClient()
+	newK8SClient()
 	setupRoutesandMiddleware(app, false)
 
 	// Return the configured app
