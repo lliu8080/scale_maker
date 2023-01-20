@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/api"
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/api"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
 )
 
 func main() {

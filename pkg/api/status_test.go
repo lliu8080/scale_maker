@@ -3,7 +3,7 @@ package api
 import (
 	"testing"
 
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/util"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
 func TestPingSuccess(t *testing.T) {

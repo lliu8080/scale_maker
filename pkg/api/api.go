@@ -8,7 +8,7 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // doc import for swagger
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 

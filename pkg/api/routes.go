@@ -23,26 +23,26 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 	v1 := app.Group("/api/v1")
 
 	// namespace related APIs
-	v1.Get("/namespaces/list", listNamespaces)
+	v1.Get("/namespace/list", listNamespaces)
 
 	//node related APIs
-	v1.Get("/nodes/list", listNodes)
+	v1.Get("/node/list", listNodes)
 
 	// deployment related APIs
-	v1.Get("/daemonsets/list", listDaemonsets)
+	v1.Get("/daemonset/list", listDaemonsets)
 
 	// deployment related APIs
-	v1.Get("/deployments/list", listDeployments)
+	v1.Get("/deployment/list", listDeployments)
 
 	// pod related APIs
-	v1.Get("/pods/list", listPods)
-	v1.Get("/pods/create", createPod)
+	v1.Get("/pod/list", listPods)
+	v1.Get("/pod/create", createPod)
 
 	// service related APIs
-	v1.Get("/services/list", listServices)
+	v1.Get("/service/list", listServices)
 
 	// statefulset related APIs
-	v1.Get("/statefulsets/list", listStatefulsets)
+	v1.Get("/statefulset/list", listStatefulsets)
 
 	// Bind handlers
 	v1.Get("/ping", getStatus)

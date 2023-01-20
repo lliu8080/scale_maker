@@ -10,23 +10,17 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	fakeDynamic "k8s.io/client-go/dynamic/fake"
 	fakek8s "k8s.io/client-go/kubernetes/fake"
-	"nuc.lliu.ca/gitea/app/scale_maker/internal/config"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
 )
 
-func TestNewK8SClientSuccess(t *testing.T) {
-	// TODO: implement the test case
-	assert.Equal(t, true, true)
+func TestInitSetupSuccess(t *testing.T) {
+	testApp = InitialTestSetup()
+	assert.NotNil(t, kc.clientSet)
 }
 
 func newK8STestClient() {
 	var err error
-	// config, err := rest.InClusterConfig()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// return kubernetes.NewForConfig(config)
-	kc.ctx = context.Background()
+	kc.ctx = context.TODO()
 	kc.clientSet = fakek8s.NewSimpleClientset()
 	if err != nil {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
