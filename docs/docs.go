@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/cities/": {
+        "/api/v1/daemonset/list": {
             "get": {
-                "description": "Fetch all cities from DB",
+                "description": "Gets the list of the Daemonsets in the k8s cluster.",
                 "consumes": [
                     "application/json"
                 ],
@@ -26,45 +26,19 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "City"
+                    "Kubernetes"
                 ],
-                "summary": "Fetch all cities from DB",
+                "summary": "Gets the list of the Daemonsets in the k8s cluster.",
                 "responses": {
                     "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
                     }
                 }
             }
         },
-        "/api/v1/city/": {
-            "post": {
-                "description": "Add a city from DB by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "City"
-                ],
-                "summary": "Add a city from DB by ID",
-                "responses": {
-                    "201": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/city/:cityName/": {
+        "/api/v1/ping": {
             "get": {
-                "description": "Fetch a city from DB by name",
+                "description": "Fetch the current status of the application.",
                 "consumes": [
                     "application/json"
                 ],
@@ -72,128 +46,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "City"
+                    "Status"
                 ],
-                "summary": "Fetch a city from DB by name",
+                "summary": "Fetch the current status of the application.",
                 "responses": {
                     "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/city/:id/": {
-            "get": {
-                "description": "Fetch a city from DB by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "City"
-                ],
-                "summary": "Fetch a city from DB by ID",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete a city from DB by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "City"
-                ],
-                "summary": "Delete a city from DB by ID",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/weather/current/:cityName": {
-            "get": {
-                "description": "Fetch current weather for all cities from DB",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Weather"
-                ],
-                "summary": "Fetch current weather for all cities from DB",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/weather/daily/:cityName": {
-            "get": {
-                "description": "Fetch daily weather for all cities from DB",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Weather"
-                ],
-                "summary": "Fetch daily weather for all cities from DB",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/weather/hourly/:cityName": {
-            "get": {
-                "description": "Fetch hourly weather for all cities from DB",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Weather"
-                ],
-                "summary": "Fetch hourly weather for all cities from DB",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "Sample result: {\\\"status\\\":\\\"alive\\\"}"
                     }
                 }
             }

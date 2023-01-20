@@ -1,123 +1,30 @@
 info:
   contact: {}
 paths:
-  /api/v1/cities/:
+  /api/v1/daemonset/list:
     get:
       consumes:
       - application/json
-      description: Fetch all cities from DB
+      description: Gets the list of the Daemonsets in the k8s cluster.
       produces:
       - application/json
       responses:
         "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch all cities from DB
+          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+      summary: Gets the list of the Daemonsets in the k8s cluster.
       tags:
-      - City
-  /api/v1/city/:
-    post:
-      consumes:
-      - application/json
-      description: Add a city from DB by ID
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: ok
-          schema:
-            type: string
-      summary: Add a city from DB by ID
-      tags:
-      - City
-  /api/v1/city/:cityName/:
+      - Kubernetes
+  /api/v1/ping:
     get:
       consumes:
       - application/json
-      description: Fetch a city from DB by name
+      description: Fetch the current status of the application.
       produces:
       - application/json
       responses:
         "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch a city from DB by name
+          description: 'Sample result: {\"status\":\"alive\"}'
+      summary: Fetch the current status of the application.
       tags:
-      - City
-  /api/v1/city/:id/:
-    delete:
-      consumes:
-      - application/json
-      description: Delete a city from DB by ID
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Delete a city from DB by ID
-      tags:
-      - City
-    get:
-      consumes:
-      - application/json
-      description: Fetch a city from DB by ID
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch a city from DB by ID
-      tags:
-      - City
-  /api/v1/weather/current/:cityName:
-    get:
-      consumes:
-      - application/json
-      description: Fetch current weather for all cities from DB
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch current weather for all cities from DB
-      tags:
-      - Weather
-  /api/v1/weather/daily/:cityName:
-    get:
-      consumes:
-      - application/json
-      description: Fetch daily weather for all cities from DB
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch daily weather for all cities from DB
-      tags:
-      - Weather
-  /api/v1/weather/hourly/:cityName:
-    get:
-      consumes:
-      - application/json
-      description: Fetch hourly weather for all cities from DB
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Fetch hourly weather for all cities from DB
-      tags:
-      - Weather
+      - Status
 swagger: "2.0"
