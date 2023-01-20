@@ -7,6 +7,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic/fake"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
@@ -16,10 +17,10 @@ func setupDeployments(deploymentNum int) {
 	deployments := []runtime.Object{}
 	if deploymentNum != 0 {
 		for i := 0; i < deploymentNum; i++ {
-			deployments = append(deployments, newUnstructured("apps/v1", "deployment", "default", fmt.Sprintf("test-deployment-%d", i)))
+			deployments = append(deployments, k8s.NewUnstructured("apps/v1", "deployment", "default", fmt.Sprintf("test-deployment-%d", i)))
 		}
 	}
-	kc.dynamicClient = fake.NewSimpleDynamicClientWithCustomListKinds(scheme,
+	kc.DynamicClient = fake.NewSimpleDynamicClientWithCustomListKinds(scheme,
 		map[schema.GroupVersionResource]string{
 			{Group: "apps", Version: "v1", Resource: "deployments"}: "deploymentList",
 		},

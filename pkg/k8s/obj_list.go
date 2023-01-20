@@ -1,4 +1,4 @@
-package api
+package k8s
 
 import (
 	"context"
@@ -12,12 +12,12 @@ import (
 	"k8s.io/client-go/dynamic"
 )
 
-// listResources doc
-func listResources(c *fiber.Ctx, group, version, resource, namespace string) error {
+// ListResources doc
+func ListResources(c *fiber.Ctx, kc KClient, group, version, resource, namespace string) error {
 	if namespace == "" {
 		namespace = "default"
 	}
-	if kc.dynamicClient == nil {
+	if kc.DynamicClient == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
 				"status":  http.StatusInternalServerError,
@@ -27,8 +27,8 @@ func listResources(c *fiber.Ctx, group, version, resource, namespace string) err
 	}
 
 	list, err := listDynamicK8SObjectByNames(
-		kc.ctx,
-		kc.dynamicClient,
+		kc.Ctx,
+		kc.DynamicClient,
 		group,
 		version,
 		resource,

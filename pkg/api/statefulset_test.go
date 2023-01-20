@@ -7,6 +7,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic/fake"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
@@ -16,10 +17,10 @@ func setupStatefulsets(statefulsetNum int) {
 	statefulsets := []runtime.Object{}
 	if statefulsetNum != 0 {
 		for i := 0; i < statefulsetNum; i++ {
-			statefulsets = append(statefulsets, newUnstructured("apps/v1", "statefulset", "default", fmt.Sprintf("test-statefulset-%d", i)))
+			statefulsets = append(statefulsets, k8s.NewUnstructured("apps/v1", "statefulset", "default", fmt.Sprintf("test-statefulset-%d", i)))
 		}
 	}
-	kc.dynamicClient = fake.NewSimpleDynamicClientWithCustomListKinds(scheme,
+	kc.DynamicClient = fake.NewSimpleDynamicClientWithCustomListKinds(scheme,
 		map[schema.GroupVersionResource]string{
 			{Group: "apps", Version: "v1", Resource: "statefulsets"}: "statefulsetList",
 		},

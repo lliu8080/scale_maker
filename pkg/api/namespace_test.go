@@ -24,7 +24,7 @@ func setupNamespace(namespaceNum int) {
 			})
 		}
 	}
-	kc.clientSet = fake.NewSimpleClientset(ns...)
+	kc.ClientSet = fake.NewSimpleClientset(ns...)
 }
 
 func TestListEmptyNamespaceSuccess(t *testing.T) {

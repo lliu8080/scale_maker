@@ -9,20 +9,15 @@ import (
 	"k8s.io/client-go/kubernetes"
 	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // doc import for swagger
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
-
-type k8sClinet struct {
-	clientSet     kubernetes.Interface //*kubernetes.Clientset or fake
-	dynamicClient dynamic.Interface    //*dynamic.DynamicClient or fake
-	ctx           context.Context
-}
 
 // type k8sTemplates struct {
 // 	cpuLoadTestPod *yamlutil.YAMLOrJSONDecoder
 // }
 
-var kc k8sClinet
+var kc k8s.KClient
 
 // var kt k8sTemplates
 
@@ -34,13 +29,13 @@ func newK8SClient() {
 	// }
 
 	// return kubernetes.NewForConfig(config)
-	kc.ctx = context.Background()
+	kc.Ctx = context.Background()
 	config := ctrl.GetConfigOrDie()
-	kc.clientSet, err = kubernetes.NewForConfig(config)
+	kc.ClientSet, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
-	kc.dynamicClient = dynamic.NewForConfigOrDie(config)
+	kc.DynamicClient = dynamic.NewForConfigOrDie(config)
 }
 
 // func loadDefaultK8STemplates() {

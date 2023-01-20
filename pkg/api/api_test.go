@@ -17,17 +17,17 @@ var testApp *fiber.App
 
 func TestInitSetupSuccess(t *testing.T) {
 	testApp = InitialTestSetup()
-	assert.NotNil(t, kc.clientSet)
+	assert.NotNil(t, kc.ClientSet)
 }
 
 func newK8STestClient() {
 	var err error
-	kc.ctx = context.TODO()
-	kc.clientSet = fakek8s.NewSimpleClientset()
+	kc.Ctx = context.TODO()
+	kc.ClientSet = fakek8s.NewSimpleClientset()
 	if err != nil {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
-	kc.dynamicClient = fakeDynamic.NewSimpleDynamicClient(runtime.NewScheme())
+	kc.DynamicClient = fakeDynamic.NewSimpleDynamicClient(runtime.NewScheme())
 }
 
 // InitialSetup doc

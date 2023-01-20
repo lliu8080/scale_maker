@@ -9,7 +9,7 @@ import (
 
 // listNodes doc
 func listNodes(c *fiber.Ctx) error {
-	if kc.clientSet == nil {
+	if kc.ClientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
 				"status":  http.StatusInternalServerError,
@@ -18,8 +18,8 @@ func listNodes(c *fiber.Ctx) error {
 		)
 	}
 
-	nList, err := kc.clientSet.CoreV1().Nodes().List(
-		kc.ctx, metav1.ListOptions{})
+	nList, err := kc.ClientSet.CoreV1().Nodes().List(
+		kc.Ctx, metav1.ListOptions{})
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{

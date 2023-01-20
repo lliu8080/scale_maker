@@ -24,7 +24,7 @@ func setupNode(nodeNum int) {
 			})
 		}
 	}
-	kc.clientSet = fake.NewSimpleClientset(ns...)
+	kc.ClientSet = fake.NewSimpleClientset(ns...)
 }
 
 func TestListEmptyNodeSuccess(t *testing.T) {

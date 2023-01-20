@@ -9,7 +9,7 @@ import (
 
 // listNamespaces doc
 func listNamespaces(c *fiber.Ctx) error {
-	if kc.clientSet == nil {
+	if kc.ClientSet == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
 				"status":  http.StatusInternalServerError,
@@ -18,8 +18,8 @@ func listNamespaces(c *fiber.Ctx) error {
 		)
 	}
 
-	nsList, err := kc.clientSet.CoreV1().Namespaces().List(
-		kc.ctx, metav1.ListOptions{})
+	nsList, err := kc.ClientSet.CoreV1().Namespaces().List(
+		kc.Ctx, metav1.ListOptions{})
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{

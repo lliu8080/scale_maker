@@ -1,8 +1,11 @@
-package api
+package k8s
 
-import "k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+import (
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+)
 
-func newUnstructured(apiVersion, kind, namespace, name string) *unstructured.Unstructured {
+// NewUnstructured - doc
+func NewUnstructured(apiVersion, kind, namespace, name string) *unstructured.Unstructured {
 	return &unstructured.Unstructured{
 		Object: map[string]interface{}{
 			"apiVersion": apiVersion,
