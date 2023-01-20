@@ -36,7 +36,8 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 
 	// pod related APIs
 	v1.Get("/pod/list", listPods)
-	v1.Get("/pod/create", createPod)
+	v1.Post("/pod/template/create", createPodFromTemplate)
+	v1.Post("/pod/yaml/create", createPodFromBody)
 
 	// service related APIs
 	v1.Get("/service/list", listServices)

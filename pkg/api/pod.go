@@ -14,10 +14,24 @@ func listPods(c *fiber.Ctx) error {
 	return k8s.ListResources(c, kc, "", "v1", resource, namespace)
 }
 
-// createPod creates a new pod from yaml template
-func createPod(c *fiber.Ctx) error {
+// createPodFromTemplate creates a new pod from yaml template
+func createPodFromTemplate(c *fiber.Ctx) error {
 	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
 	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate); err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status":  http.StatusInternalServerError,
+			"message": "Error: create pod failed with error " + err.Error() + "!",
+		})
+	}
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status":  http.StatusOK,
+		"message": "pod created successfully",
+	})
+}
+
+// createPodFromBody creates a new pod from yaml template
+func createPodFromBody(c *fiber.Ctx) error {
+	if err := k8s.CreateReourceFromData(kc, c.Body()); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
 			"message": "Error: create pod failed with error " + err.Error() + "!",

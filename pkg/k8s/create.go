@@ -23,10 +23,11 @@ func CreateReourceFromTempate(kc KClient, templateFullPath string) error {
 		log.Println("Error: can not load " + templateFullPath + "with error " + err.Error())
 		return err
 	}
-	return createReourceFromData(kc, cpuLoadTestPodData)
+	return CreateReourceFromData(kc, cpuLoadTestPodData)
 }
 
-func createReourceFromData(kc KClient, data []byte) error {
+// CreateReourceFromData - doc
+func CreateReourceFromData(kc KClient, data []byte) error {
 	var rawObj runtime.RawExtension
 	decodedFile := yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(data), 100)
 
