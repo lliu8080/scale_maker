@@ -4,25 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic/fake"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
-
-func newUnstructured(apiVersion, kind, namespace, name string) *unstructured.Unstructured {
-	return &unstructured.Unstructured{
-		Object: map[string]interface{}{
-			"apiVersion": apiVersion,
-			"kind":       kind,
-			"metadata": map[string]interface{}{
-				"namespace": namespace,
-				"name":      name,
-			},
-		},
-	}
-}
 
 func setupPods(podNum int) {
 	testApp = InitialTestSetup()
@@ -39,13 +25,12 @@ func setupPods(podNum int) {
 		},
 		pods...,
 	)
-
 }
 
 func TestListEmptyPodSuccess(t *testing.T) {
 	tests := []util.APITest{
 		{
-			Description:   "list namespaces",
+			Description:   "list pods",
 			Route:         "/api/v1/pod/list",
 			HttpMethod:    "GET",
 			ExpectedError: false,
@@ -54,5 +39,20 @@ func TestListEmptyPodSuccess(t *testing.T) {
 		},
 	}
 	setupPods(0)
+	util.RunAPITests(t, testApp, &tests)
+}
+
+func TestListMutiPodSuccess(t *testing.T) {
+	tests := []util.APITest{
+		{
+			Description:   "list pods",
+			Route:         "/api/v1/pod/list",
+			HttpMethod:    "GET",
+			ExpectedError: false,
+			ExpectedCode:  200,
+			ExpectedBody:  "{\"namespace\":\"default\",\"number_of_pods\":2,\"pods\":[\"test-pod-0\",\"test-pod-1\"],\"status\":200}",
+		},
+	}
+	setupPods(2)
 	util.RunAPITests(t, testApp, &tests)
 }

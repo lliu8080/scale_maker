@@ -4,15 +4,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/gofiber/fiber/v2"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes/fake"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
-
-var testApp *fiber.App
 
 func setupNamespace(namespaceNum int) {
 	testApp = InitialTestSetup()

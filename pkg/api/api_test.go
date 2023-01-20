@@ -13,6 +13,8 @@ import (
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
 )
 
+var testApp *fiber.App
+
 func TestInitSetupSuccess(t *testing.T) {
 	testApp = InitialTestSetup()
 	assert.NotNil(t, kc.clientSet)
