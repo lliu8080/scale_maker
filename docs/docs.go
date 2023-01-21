@@ -16,9 +16,29 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/bulk/create": {
+            "post": {
+                "description": "Creates all the resources passed via request body.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bulk Kubernetes"
+                ],
+                "summary": "Creates all the resources passed via request body.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
         "/api/v1/daemonset/list": {
             "get": {
-                "description": "Gets the list of the Daemonsets in the k8s cluster.",
+                "description": "Gets the list of the daemonsets in the k8s cluster.",
                 "consumes": [
                     "application/json"
                 ],
@@ -29,6 +49,66 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the Daemonsets in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/deployment/list": {
+            "get": {
+                "description": "Gets the list of the deployments in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the deployments in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/namespace/list": {
+            "get": {
+                "description": "Gets the list of the namespaces in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the namespaces in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/node/list": {
+            "get": {
+                "description": "Gets the list of the nodes in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the nodes in the k8s cluster.",
                 "responses": {
                     "200": {
                         "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
@@ -52,6 +132,106 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Sample result: {\\\"status\\\":\\\"alive\\\"}"
+                    }
+                }
+            }
+        },
+        "/api/v1/pod/list": {
+            "get": {
+                "description": "Gets the list of the pods in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the pods in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/pod/template/create": {
+            "post": {
+                "description": "Creates the pods from the pod template.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Creates the pods from the pod template.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/pod/yaml/create": {
+            "post": {
+                "description": "Creates the pods from the request body.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Creates the pods from the request body.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/service/list": {
+            "get": {
+                "description": "Gets the list of the services in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the services in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/statefulset/list": {
+            "get": {
+                "description": "Gets the list of the statefulsets in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Gets the list of the statefulsets in the k8s cluster.",
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
                     }
                 }
             }

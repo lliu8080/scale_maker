@@ -5,9 +5,9 @@ import (
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
 )
 
-// listDaemonsets gets the list of the Daemonsets in the k8s cluster.
+// listDaemonsets gets the list of the daemonsets in the k8s cluster.
 // @Summary Gets the list of the Daemonsets in the k8s cluster.
-// @Description Gets the list of the Daemonsets in the k8s cluster.
+// @Description Gets the list of the daemonsets in the k8s cluster.
 // @Tags Kubernetes
 // @Accept  json
 // @Produce  json
