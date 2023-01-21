@@ -11,7 +11,6 @@ import (
 // @Summary Gets the list of the pods in the k8s cluster.
 // @Description Gets the list of the pods in the k8s cluster.
 // @Tags Kubernetes
-// @Accept  json
 // @Produce  json
 // @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
 // @Router /api/v1/pod/list [get]
@@ -25,7 +24,8 @@ func listPods(c *fiber.Ctx) error {
 // @Summary Creates the pods from the pod template.
 // @Description Creates the pods from the pod template.
 // @Tags Kubernetes
-// @Accept  json
+// @Accept  application/yaml
+// @Param body_param body  string true "body_param"
 // @Produce  json
 // @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
 // @Router /api/v1/pod/template/create [post]
@@ -47,11 +47,13 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 // @Summary Creates the pods from the request body.
 // @Description Creates the pods from the request body.
 // @Tags Kubernetes
-// @Accept  json
+// @Accept  application/yaml
+// @Param body_param body  string true "body_param"
 // @Produce  json
 // @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
 // @Router /api/v1/pod/yaml/create [post]
 func createPodFromBody(c *fiber.Ctx) error {
+	c.Accepts("application/yaml")
 	if err := k8s.CreateReourceFromData(kc, c.Body()); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,

@@ -4,8 +4,15 @@ paths:
   /api/v1/bulk/create:
     post:
       consumes:
-      - application/json
+      - application/yaml
       description: Creates all the resources passed via request body.
+      parameters:
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:
@@ -13,7 +20,7 @@ paths:
           description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
       summary: Creates all the resources passed via request body.
       tags:
-      - Bulk Kubernetes
+      - Kubernetes Bulk API
   /api/v1/daemonset/list:
     get:
       consumes:
@@ -81,8 +88,6 @@ paths:
       - Status
   /api/v1/pod/list:
     get:
-      consumes:
-      - application/json
       description: Gets the list of the pods in the k8s cluster.
       produces:
       - application/json
@@ -95,8 +100,15 @@ paths:
   /api/v1/pod/template/create:
     post:
       consumes:
-      - application/json
+      - application/yaml
       description: Creates the pods from the pod template.
+      parameters:
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:
@@ -108,8 +120,15 @@ paths:
   /api/v1/pod/yaml/create:
     post:
       consumes:
-      - application/json
+      - application/yaml
       description: Creates the pods from the request body.
+      parameters:
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:

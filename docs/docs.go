@@ -20,15 +20,26 @@ const docTemplate = `{
             "post": {
                 "description": "Creates all the resources passed via request body.",
                 "consumes": [
-                    "application/json"
+                    "application/yaml"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Bulk Kubernetes"
+                    "Kubernetes Bulk API"
                 ],
                 "summary": "Creates all the resources passed via request body.",
+                "parameters": [
+                    {
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
@@ -139,9 +150,6 @@ const docTemplate = `{
         "/api/v1/pod/list": {
             "get": {
                 "description": "Gets the list of the pods in the k8s cluster.",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -160,7 +168,7 @@ const docTemplate = `{
             "post": {
                 "description": "Creates the pods from the pod template.",
                 "consumes": [
-                    "application/json"
+                    "application/yaml"
                 ],
                 "produces": [
                     "application/json"
@@ -169,6 +177,17 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Creates the pods from the pod template.",
+                "parameters": [
+                    {
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
@@ -180,7 +199,7 @@ const docTemplate = `{
             "post": {
                 "description": "Creates the pods from the request body.",
                 "consumes": [
-                    "application/json"
+                    "application/yaml"
                 ],
                 "produces": [
                     "application/json"
@@ -189,6 +208,17 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Creates the pods from the request body.",
+                "parameters": [
+                    {
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
