@@ -6,13 +6,15 @@ import (
 )
 
 // listStatefulsets gets the list of the statefulsets in the k8s cluster.
-// @Summary Gets the list of the statefulsets in the k8s cluster.
-// @Description Gets the list of the statefulsets in the k8s cluster.
-// @Tags Kubernetes
-// @Accept  json
-// @Produce  json
-// @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
-// @Router /api/v1/statefulset/list [get]
+//
+//	@Summary		Gets the list of the statefulsets in the k8s cluster.
+//	@Description	Gets the list of the statefulsets in the k8s cluster.
+//	@Tags			Kubernetes
+//	@Accept			json
+//	@Param			namespace	query	string	false	"statefulset search by namespace"	Format(string)
+//	@Produce		json
+//	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}"	string
+//	@Router			/api/v1/statefulset/list [get]
 func listStatefulsets(c *fiber.Ctx) error {
 	resource := "statefulsets"
 	namespace := c.Query("namespace")

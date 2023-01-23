@@ -5,5 +5,6 @@
 
 See the swag [document](https://github.com/swaggo/swag/blob/master/README.md) for details.
 ```
+swag fmt
 swag init
 ```

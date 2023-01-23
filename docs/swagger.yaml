@@ -26,6 +26,12 @@ paths:
       consumes:
       - application/json
       description: Gets the list of the daemonsets in the k8s cluster.
+      parameters:
+      - description: daemonset search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
       produces:
       - application/json
       responses:
@@ -39,11 +45,17 @@ paths:
       consumes:
       - application/json
       description: Gets the list of the deployments in the k8s cluster.
+      parameters:
+      - description: deployment search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"deployments\":[],\"namespace\":\"default\",\"number_of_deployments\":0,\"status\":200}'
       summary: Gets the list of the deployments in the k8s cluster.
       tags:
       - Kubernetes
@@ -56,7 +68,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"namespaces\":[],\"number_of_namespaces\":0,\"status\":200}'
       summary: Gets the list of the namespaces in the k8s cluster.
       tags:
       - Kubernetes
@@ -88,12 +100,20 @@ paths:
       - Status
   /api/v1/pod/list:
     get:
+      consumes:
+      - application/json
       description: Gets the list of the pods in the k8s cluster.
+      parameters:
+      - description: pod search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"namespace\":\"default\",\"number_of_pods\":0,\"pods\":[],\"status\":200}'
       summary: Gets the list of the pods in the k8s cluster.
       tags:
       - Kubernetes
@@ -101,19 +121,44 @@ paths:
     post:
       consumes:
       - application/yaml
-      description: Creates the pods from the pod template.
+      description: Creates the pods from the pod template, currently the method only
+        supports pod with one container.
       parameters:
-      - description: body_param
-        in: body
-        name: body_param
-        required: true
-        schema:
-          type: string
+      - description: namespace to create the pod
+        format: string
+        in: query
+        name: namespace
+        type: string
+      - description: template name needed to create the pod
+        format: string
+        in: query
+        name: template_name
+        type: string
+      - description: requested cpu value
+        format: string
+        in: query
+        name: cpu_request
+        type: string
+      - description: requested memory value
+        format: string
+        in: query
+        name: memory_request
+        type: string
+      - description: limited cpu value
+        format: string
+        in: query
+        name: cpu_limit
+        type: string
+      - description: limited memory value
+        format: string
+        in: query
+        name: memory_limit
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}'
       summary: Creates the pods from the pod template.
       tags:
       - Kubernetes
@@ -133,7 +178,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}'
       summary: Creates the pods from the request body.
       tags:
       - Kubernetes
@@ -142,11 +187,17 @@ paths:
       consumes:
       - application/json
       description: Gets the list of the services in the k8s cluster.
+      parameters:
+      - description: service search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"namespace\":\"default\",\"number_of_services\":0,\"services\":[],\"status\":200}'
       summary: Gets the list of the services in the k8s cluster.
       tags:
       - Kubernetes
@@ -155,11 +206,17 @@ paths:
       consumes:
       - application/json
       description: Gets the list of the statefulsets in the k8s cluster.
+      parameters:
+      - description: statefulset search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
+          description: 'Sample result: "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}'
       summary: Gets the list of the statefulsets in the k8s cluster.
       tags:
       - Kubernetes

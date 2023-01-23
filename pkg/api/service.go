@@ -6,13 +6,15 @@ import (
 )
 
 // listServices gets the list of the services in the k8s cluster.
-// @Summary Gets the list of the services in the k8s cluster.
-// @Description Gets the list of the services in the k8s cluster.
-// @Tags Kubernetes
-// @Accept  json
-// @Produce  json
-// @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
-// @Router /api/v1/service/list [get]
+//
+//	@Summary		Gets the list of the services in the k8s cluster.
+//	@Description	Gets the list of the services in the k8s cluster.
+//	@Tags			Kubernetes
+//	@Accept			json
+//	@Param			namespace	query	string	false	"service search by namespace"	Format(string)
+//	@Produce		json
+//	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_services\":0,\"services\":[],\"status\":200}"	string
+//	@Router			/api/v1/service/list [get]
 func listServices(c *fiber.Ctx) error {
 	resource := "services"
 	namespace := c.Query("namespace")

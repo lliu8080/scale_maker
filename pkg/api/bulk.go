@@ -8,14 +8,14 @@ import (
 )
 
 // createResourcesFromBody creates all the resources passed via request body.
-// @Summary Creates all the resources passed via request body.
-// @Description Creates all the resources passed via request body.
-// @Tags Kubernetes Bulk API
-// @Accept  application/yaml
-// @Param body_param body  string true "body_param"
-// @Produce  json
-// @Success 200 "Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}"" string
-// @Router /api/v1/bulk/create [post]
+//	@Summary		Creates all the resources passed via request body.
+//	@Description	Creates all the resources passed via request body.
+//	@Tags			Kubernetes Bulk API
+//	@Accept			application/yaml
+//	@Param			body_param	body	string	true	"body_param"
+//	@Produce		json
+//	@Success		200	"Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}""	string
+//	@Router			/api/v1/bulk/create [post]
 func createResourcesFromBody(c *fiber.Ctx) error {
 	c.Accepts("application/yaml")
 	if err := k8s.CreateReourceFromData(kc, c.Body()); err != nil {

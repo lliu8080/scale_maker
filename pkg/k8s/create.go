@@ -37,26 +37,30 @@ func CreateReourceFromData(kc KClient, data []byte) error {
 	}
 
 	obj, gvk, err := yaml.NewDecodingSerializer(unstructured.UnstructuredJSONScheme).Decode(rawObj.Raw, nil, nil)
+	if err != nil {
+		log.Println("Error: can not serialize data, " + err.Error())
+		return err
+	}
 	unstructuredMap, err := runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
 	if err != nil {
-		log.Println("Error: can not decode data, " + err.Error())
+		log.Println("Error: can not decode unstructured data, " + err.Error())
 		return err
 	}
 
 	unstructuredObj := &unstructured.Unstructured{Object: unstructuredMap}
 	gr, err := restmapper.GetAPIGroupResources(kc.ClientSet.Discovery())
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error:  can not get API group resources, " + err.Error())
 		return err
 	}
 
 	mapper := restmapper.NewDiscoveryRESTMapper(gr)
 	mapping, err := mapper.RESTMapping(gvk.GroupKind(), gvk.Version)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: can not get rest mapping, " + err.Error())
 		return err
 	}
-
+	unstructuredObj.UnstructuredContent()
 	var dri dynamic.ResourceInterface
 	if mapping.Scope.Name() == meta.RESTScopeNameNamespace {
 		if unstructuredObj.GetNamespace() == "" {
@@ -68,7 +72,8 @@ func CreateReourceFromData(kc KClient, data []byte) error {
 	}
 
 	if _, err := dri.Create(context.Background(), unstructuredObj, metav1.CreateOptions{}); err != nil {
-		log.Println(err.Error())
+		log.Println("Error: can not create resource, " + err.Error())
+		return err
 	}
 	return nil
 }

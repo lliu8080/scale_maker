@@ -60,6 +60,15 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the Daemonsets in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "daemonset search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
@@ -80,9 +89,18 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the deployments in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "deployment search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"deployments\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_deployments\\\":0,\\\"status\\\":200}"
                     }
                 }
             }
@@ -102,7 +120,7 @@ const docTemplate = `{
                 "summary": "Gets the list of the namespaces in the k8s cluster.",
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"namespaces\\\":[],\\\"number_of_namespaces\\\":0,\\\"status\\\":200}"
                     }
                 }
             }
@@ -150,6 +168,9 @@ const docTemplate = `{
         "/api/v1/pod/list": {
             "get": {
                 "description": "Gets the list of the pods in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -157,16 +178,25 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the pods in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "pod search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"namespace\\\":\\\"default\\\",\\\"number_of_pods\\\":0,\\\"pods\\\":[],\\\"status\\\":200}"
                     }
                 }
             }
         },
         "/api/v1/pod/template/create": {
             "post": {
-                "description": "Creates the pods from the pod template.",
+                "description": "Creates the pods from the pod template, currently the method only supports pod with one container.",
                 "consumes": [
                     "application/yaml"
                 ],
@@ -179,18 +209,51 @@ const docTemplate = `{
                 "summary": "Creates the pods from the pod template.",
                 "parameters": [
                     {
-                        "description": "body_param",
-                        "name": "body_param",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "type": "string",
+                        "format": "string",
+                        "description": "namespace to create the pod",
+                        "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "template name needed to create the pod",
+                        "name": "template_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "requested cpu value",
+                        "name": "cpu_request",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "requested memory value",
+                        "name": "memory_request",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "limited cpu value",
+                        "name": "cpu_limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "limited memory value",
+                        "name": "memory_limit",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":200}"
                     }
                 }
             }
@@ -221,7 +284,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":200}"
                     }
                 }
             }
@@ -239,9 +302,18 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the services in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "service search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"namespace\\\":\\\"default\\\",\\\"number_of_services\\\":0,\\\"services\\\":[],\\\"status\\\":200}"
                     }
                 }
             }
@@ -259,9 +331,18 @@ const docTemplate = `{
                     "Kubernetes"
                 ],
                 "summary": "Gets the list of the statefulsets in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "statefulset search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                        "description": "Sample result: \"{\\\"namespace\\\":\\\"default\\\",\\\"number_of_statefulsets\\\":0,\\\"statefulsets\\\":[],\\\"status\\\":200}"
                     }
                 }
             }
