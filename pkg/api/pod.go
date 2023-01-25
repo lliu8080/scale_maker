@@ -38,7 +38,7 @@ func listPods(c *fiber.Ctx) error {
 func createPodFromTemplate(c *fiber.Ctx) error {
 	p := new(form.UnstructuredRequest)
 	if err := c.BodyParser(&p); err != nil {
-		return c.Status(http.StatusBadRequest).SendString("Error Parsing Request Payload")
+		return c.Status(http.StatusBadRequest).SendString("Error Parsing Request Payload with error: " + err.Error())
 	}
 
 	// check template

@@ -8,5 +8,5 @@ type UnstructuredRequest struct {
 	MemoryRequest string `json:"memory_request"`
 	CPULimit      string `json:"cpu_limit"`
 	MemoryLimit   string `json:"memory_limit"`
-	CommandParams string `json:"commandParams" validate:"required"`
+	CommandParams string `json:"command_params" validate:"required"`
 }
