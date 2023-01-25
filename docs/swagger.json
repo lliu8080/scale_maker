@@ -197,53 +197,13 @@
                 "summary": "Creates the pods from the pod template.",
                 "parameters": [
                     {
-                        "type": "string",
-                        "format": "string",
-                        "description": "namespace to create the pod",
-                        "name": "namespace",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "template name needed to create the pod",
-                        "name": "template_name",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "requested cpu value",
-                        "name": "cpu_request",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "requested memory value",
-                        "name": "memory_request",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "limited cpu value",
-                        "name": "cpu_limit",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "limited memory value",
-                        "name": "memory_limit",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "format": "string",
-                        "description": "Command parameters for pod",
-                        "name": "command_params",
-                        "in": "path"
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/form.UnstructuredRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -339,6 +299,41 @@
                     "200": {
                         "description": "Sample result: \"{\\\"namespace\\\":\\\"default\\\",\\\"number_of_statefulsets\\\":0,\\\"statefulsets\\\":[],\\\"status\\\":200}"
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "form.UnstructuredRequest": {
+            "type": "object",
+            "required": [
+                "commandParams",
+                "namespace",
+                "template_name"
+            ],
+            "properties": {
+                "commandParams": {
+                    "type": "string"
+                },
+                "cpu_limit": {
+                    "type": "string"
+                },
+                "cpu_request": {
+                    "type": "string"
+                },
+                "memory_limit": {
+                    "type": "string"
+                },
+                "memory_request": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "template_name": {
+                    "type": "string",
+                    "maxLength": 40,
+                    "minLength": 2
                 }
             }
         }

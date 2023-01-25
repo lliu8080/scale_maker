@@ -8,8 +8,10 @@ spec:
     - name: cup-load-test-pod
       image: nuc.lliu.ca/lliu/scale_maker:44
       command:
-        - /usr/bin/stress-ng
-        - {{ .commandParams }}
+        - /bin/bash
+        - -c
+        - /bin/stress-ng
+        - {{ .commandParams }}1
       livenessProbe:
         exec:
           command:

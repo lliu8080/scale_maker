@@ -1,3 +1,27 @@
+definitions:
+  form.UnstructuredRequest:
+    properties:
+      commandParams:
+        type: string
+      cpu_limit:
+        type: string
+      cpu_request:
+        type: string
+      memory_limit:
+        type: string
+      memory_request:
+        type: string
+      namespace:
+        type: string
+      template_name:
+        maxLength: 40
+        minLength: 2
+        type: string
+    required:
+    - commandParams
+    - namespace
+    - template_name
+    type: object
 info:
   contact: {}
 paths:
@@ -124,41 +148,12 @@ paths:
       description: Creates the pods from the pod template, currently the method only
         supports pod with one container.
       parameters:
-      - description: namespace to create the pod
-        format: string
-        in: path
-        name: namespace
-        type: string
-      - description: template name needed to create the pod
-        format: string
-        in: path
-        name: template_name
-        type: string
-      - description: requested cpu value
-        format: string
-        in: path
-        name: cpu_request
-        type: string
-      - description: requested memory value
-        format: string
-        in: path
-        name: memory_request
-        type: string
-      - description: limited cpu value
-        format: string
-        in: path
-        name: cpu_limit
-        type: string
-      - description: limited memory value
-        format: string
-        in: path
-        name: memory_limit
-        type: string
-      - description: Command parameters for pod
-        format: string
-        in: path
-        name: command_params
-        type: string
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          $ref: '#/definitions/form.UnstructuredRequest'
       produces:
       - application/json
       responses:

@@ -31,13 +31,7 @@ func listPods(c *fiber.Ctx) error {
 //	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
 //	@Tags			Kubernetes
 //	@Accept			application/yaml
-//	@Param			namespace		path	string	false	"namespace to create the pod"				Format(string)
-//	@Param			template_name	path	string	false	"template name needed to create the pod"	Format(string)
-//	@Param			cpu_request		path	string	false	"requested cpu value"						Format(string)
-//	@Param			memory_request	path	string	false	"requested memory value"					Format(string)
-//	@Param			cpu_limit		path	string	false	"limited cpu value"							Format(string)
-//	@Param			memory_limit	path	string	false	"limited memory value"						Format(string)
-//	@Param			command_params	path	string	false	"Command parameters for pod"				Format(string)
+//	@Param			body_param	body	form.UnstructuredRequest	true	"body_param"
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
 //	@Router			/api/v1/pod/template/create [post]
