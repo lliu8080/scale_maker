@@ -5,13 +5,10 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   containers:
-    - name: cup-load-test-pod
+    - name: load-test-pod
       image: nuc.lliu.ca/lliu/scale_maker:51
-      command:
-        - /bin/bash
-        - -c
-        - /bin/stress-ng
-        - {{ .commandParams }}1
+      command: ["/bin/bash"]
+      args: ["-c", "stress-ng {{ .commandParams }}"]
       livenessProbe:
         exec:
           command:
@@ -22,9 +19,9 @@ spec:
           - /bin/true
       resources:
         requests:
-          cpu: {{ .cpuRequest }}
-          memory: {{ .memoryRequest }}
+          cpu: "{{ .cpuRequest }}"
+          memory: "{{ .memoryRequest }}"
         limits:
-          cpu: {{ .cpuLimit }}
-          memory: {{ .memoryLimit }}
+          cpu: "{{ .cpuLimit }}"
+          memory: "{{ .memoryLimit }}"
       securityContext: {}
