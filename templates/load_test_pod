@@ -20,6 +20,9 @@ spec:
           - /bin/true
       resources:
         requests:
-          cpu: 50m
-          memory: 50Mi
+          cpu: {{ .cpuRequest }}
+          memory: {{ .memoryRequest }}
+        limits:
+          cpu: {{ .cpuLimit }}
+          memory: {{ .memoryLimit }}
       securityContext: {}
