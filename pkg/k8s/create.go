@@ -84,13 +84,7 @@ func serializeResources(data []byte) ([]model.UnstructuredObj, error) {
 
 func createReource(kc KClient, obj model.UnstructuredObj) error {
 
-	unstructuredMap, err := runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
-	if err != nil {
-		log.Println("Error: can not decode unstructured data, " + err.Error())
-		return err
-	}
-
-	unstructuredObj := &unstructured.Unstructured{Object: unstructuredMap}
+	unstructuredObj := &unstructured.Unstructured{Object: obj.Obj}
 	gr, err := restmapper.GetAPIGroupResources(kc.ClientSet.Discovery())
 	if err != nil {
 		log.Println("Error:  can not get API group resources, " + err.Error())
