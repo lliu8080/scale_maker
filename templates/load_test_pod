@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cup-load-test-pod
+  name: load-test-pod-{{ .instanceName}}
   namespace: test
 spec:
   containers:
     - name: cup-load-test-pod
-      image: nuc.lliu.ca/lliu/scale_maker:28
+      image: nuc.lliu.ca/lliu/scale_maker:43
       command:
-        - /usr/bin/bash
-        - -c
-        - sleep 9999999999999999999999999
+        - /usr/bin/stress-ng
+        - {{ .commandParams }}
       livenessProbe:
         exec:
           command:

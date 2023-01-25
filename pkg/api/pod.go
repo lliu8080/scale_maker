@@ -4,7 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/form"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
 // listPods gets the list of the pods in the k8s cluster.
@@ -29,18 +31,44 @@ func listPods(c *fiber.Ctx) error {
 //	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
 //	@Tags			Kubernetes
 //	@Accept			application/yaml
-//	@Param			namespace		query	string	false	"namespace to create the pod"				Format(string)
-//	@Param			template_name	query	string	false	"template name needed to create the pod"	Format(string)
-//	@Param			cpu_request		query	string	false	"requested cpu value"						Format(string)
-//	@Param			memory_request	query	string	false	"requested memory value"					Format(string)
-//	@Param			cpu_limit		query	string	false	"limited cpu value"							Format(string)
-//	@Param			memory_limit	query	string	false	"limited memory value"						Format(string)
+//	@Param			namespace		payload	string	false	"namespace to create the pod"				Format(string)
+//	@Param			template_name	payload	string	false	"template name needed to create the pod"	Format(string)
+//	@Param			cpu_request		payload	string	false	"requested cpu value"						Format(string)
+//	@Param			memory_request	payload	string	false	"requested memory value"					Format(string)
+//	@Param			cpu_limit		payload	string	false	"limited cpu value"							Format(string)
+//	@Param			memory_limit	payload	string	false	"limited memory value"						Format(string)
+//	@Param			command_params	payload	string	false	"Command parameters for pod"						Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
 //	@Router			/api/v1/pod/template/create [post]
 func createPodFromTemplate(c *fiber.Ctx) error {
-	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
-	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate); err != nil {
+	p := new(form.UnstructuredRequest)
+	if err := c.BodyParser(&p); err != nil {
+		return c.Status(http.StatusBadRequest).SendString("Error Parsing Request Payload")
+	}
+
+	// check template
+	cpuLoadTestPodTemplate := "./templates/" + p.TemplateName
+	if _, err := util.CheckFileExists(cpuLoadTestPodTemplate); err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": http.StatusInternalServerError,
+			"message": "Error: unable to retrieve template " +
+				cpuLoadTestPodTemplate + " with error " + err.Error() + "!",
+		})
+	}
+
+	// render template with data
+	instanceName := util.GenerateRandomHash()
+	data := map[string]string{
+		"instanceName":  instanceName,
+		"cpuRequest":    p.CPURequest,
+		"memoryRequest": p.MemoryRequest,
+		"cpuLimit":      p.CPULimit,
+		"memoryLimit":   p.MemoryLimit,
+		"commandParams": p.CommandParams,
+	}
+
+	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate, data); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
 			"message": "Error: create pod failed with error " + err.Error() + "!",

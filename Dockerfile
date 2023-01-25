@@ -21,6 +21,8 @@ FROM almalinux:$almalinux_version
 
 WORKDIR /app
 RUN dnf -y update
+RUN dnf -y install stress-ng iperf3
+
 # Create the `public` dir and copy all the assets into it
 RUN mkdir ./assets
 COPY ./assets ./assets
