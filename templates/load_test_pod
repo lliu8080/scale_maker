@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: cup-load-test-pod
-      image: nuc.lliu.ca/lliu/scale_maker:49
+      image: nuc.lliu.ca/lliu/scale_maker:51
       command:
         - /bin/bash
         - -c
