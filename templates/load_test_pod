@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: cup-load-test-pod
-      image: nuc.lliu.ca/lliu/scale_maker:43
+      image: nuc.lliu.ca/lliu/scale_maker:44
       command:
         - /usr/bin/stress-ng
         - {{ .commandParams }}

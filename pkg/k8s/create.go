@@ -52,11 +52,10 @@ func CreateReourceFromData(kc KClient, data []byte) error {
 
 func serializeResources(data []byte) ([]model.UnstructuredObj, error) {
 	objs := []model.UnstructuredObj{}
+	decodedFile := yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(data), 100)
 	for {
 		var rawObj runtime.RawExtension
 		var unstructuredObj model.UnstructuredObj
-		decodedFile := yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(data), 100)
-
 		if err := decodedFile.Decode(&rawObj); err != nil {
 			break
 		}
