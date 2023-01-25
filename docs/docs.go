@@ -213,42 +213,49 @@ const docTemplate = `{
                         "format": "string",
                         "description": "namespace to create the pod",
                         "name": "namespace",
-                        "in": "query"
+                        "in": "path"
                     },
                     {
                         "type": "string",
                         "format": "string",
                         "description": "template name needed to create the pod",
                         "name": "template_name",
-                        "in": "query"
+                        "in": "path"
                     },
                     {
                         "type": "string",
                         "format": "string",
                         "description": "requested cpu value",
                         "name": "cpu_request",
-                        "in": "query"
+                        "in": "path"
                     },
                     {
                         "type": "string",
                         "format": "string",
                         "description": "requested memory value",
                         "name": "memory_request",
-                        "in": "query"
+                        "in": "path"
                     },
                     {
                         "type": "string",
                         "format": "string",
                         "description": "limited cpu value",
                         "name": "cpu_limit",
-                        "in": "query"
+                        "in": "path"
                     },
                     {
                         "type": "string",
                         "format": "string",
                         "description": "limited memory value",
                         "name": "memory_limit",
-                        "in": "query"
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "Command parameters for pod",
+                        "name": "command_params",
+                        "in": "path"
                     }
                 ],
                 "responses": {

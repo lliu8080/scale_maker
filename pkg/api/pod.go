@@ -31,13 +31,13 @@ func listPods(c *fiber.Ctx) error {
 //	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
 //	@Tags			Kubernetes
 //	@Accept			application/yaml
-//	@Param			namespace		payload	string	false	"namespace to create the pod"				Format(string)
-//	@Param			template_name	payload	string	false	"template name needed to create the pod"	Format(string)
-//	@Param			cpu_request		payload	string	false	"requested cpu value"						Format(string)
-//	@Param			memory_request	payload	string	false	"requested memory value"					Format(string)
-//	@Param			cpu_limit		payload	string	false	"limited cpu value"							Format(string)
-//	@Param			memory_limit	payload	string	false	"limited memory value"						Format(string)
-//	@Param			command_params	payload	string	false	"Command parameters for pod"						Format(string)
+//	@Param			namespace		path	string	false	"namespace to create the pod"				Format(string)
+//	@Param			template_name	path	string	false	"template name needed to create the pod"	Format(string)
+//	@Param			cpu_request		path	string	false	"requested cpu value"						Format(string)
+//	@Param			memory_request	path	string	false	"requested memory value"					Format(string)
+//	@Param			cpu_limit		path	string	false	"limited cpu value"							Format(string)
+//	@Param			memory_limit	path	string	false	"limited memory value"						Format(string)
+//	@Param			command_params	path	string	false	"Command parameters for pod"				Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
 //	@Router			/api/v1/pod/template/create [post]
@@ -61,6 +61,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	instanceName := util.GenerateRandomHash()
 	data := map[string]string{
 		"instanceName":  instanceName,
+		"namespace":     p.Namespace,
 		"cpuRequest":    p.CPURequest,
 		"memoryRequest": p.MemoryRequest,
 		"cpuLimit":      p.CPULimit,

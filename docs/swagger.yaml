@@ -126,33 +126,38 @@ paths:
       parameters:
       - description: namespace to create the pod
         format: string
-        in: query
+        in: path
         name: namespace
         type: string
       - description: template name needed to create the pod
         format: string
-        in: query
+        in: path
         name: template_name
         type: string
       - description: requested cpu value
         format: string
-        in: query
+        in: path
         name: cpu_request
         type: string
       - description: requested memory value
         format: string
-        in: query
+        in: path
         name: memory_request
         type: string
       - description: limited cpu value
         format: string
-        in: query
+        in: path
         name: cpu_limit
         type: string
       - description: limited memory value
         format: string
-        in: query
+        in: path
         name: memory_limit
+        type: string
+      - description: Command parameters for pod
+        format: string
+        in: path
+        name: command_params
         type: string
       produces:
       - application/json
