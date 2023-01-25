@@ -25,7 +25,7 @@ func NewUnstructured(apiVersion, kind, namespace, name string) *unstructured.Uns
 func renderResourceFromTemplate(templatePath string, data map[string]string) ([]byte, error) {
 	var tpl bytes.Buffer
 
-	t, err := template.New("new").ParseFiles(templatePath)
+	t, err := template.ParseFiles(templatePath)
 	if err != nil {
 		return []byte{}, err
 	}

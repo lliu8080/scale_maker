@@ -3,24 +3,24 @@ definitions:
     properties:
       commandParams:
         type: string
-      cpu_limit:
+      cpuLimit:
         type: string
-      cpu_request:
+      cpuRequest:
         type: string
-      memory_limit:
+      memoryLimit:
         type: string
-      memory_request:
+      memoryRequest:
         type: string
       namespace:
         type: string
-      template_name:
+      templateName:
         maxLength: 40
         minLength: 2
         type: string
     required:
     - commandParams
     - namespace
-    - template_name
+    - templateName
     type: object
 info:
   contact: {}
@@ -144,7 +144,7 @@ paths:
   /api/v1/pod/template/create:
     post:
       consumes:
-      - application/yaml
+      - application/json
       description: Creates the pods from the pod template, currently the method only
         supports pod with one container.
       parameters:

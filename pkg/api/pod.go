@@ -30,7 +30,7 @@ func listPods(c *fiber.Ctx) error {
 //	@Summary		Creates the pods from the pod template.
 //	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
 //	@Tags			Kubernetes
-//	@Accept			application/yaml
+//	@Accept			application/json
 //	@Param			body_param	body	form.UnstructuredRequest	true	"body_param"
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
@@ -38,7 +38,7 @@ func listPods(c *fiber.Ctx) error {
 func createPodFromTemplate(c *fiber.Ctx) error {
 	p := new(form.UnstructuredRequest)
 	if err := c.BodyParser(&p); err != nil {
-		return c.Status(http.StatusBadRequest).SendString("Error Parsing Request Payload with error: " + err.Error())
+		return c.Status(http.StatusBadRequest).SendString("Error parsing request payload with error: " + err.Error())
 	}
 
 	// check template

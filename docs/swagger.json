@@ -186,7 +186,7 @@
             "post": {
                 "description": "Creates the pods from the pod template, currently the method only supports pod with one container.",
                 "consumes": [
-                    "application/yaml"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -309,28 +309,28 @@
             "required": [
                 "commandParams",
                 "namespace",
-                "template_name"
+                "templateName"
             ],
             "properties": {
                 "commandParams": {
                     "type": "string"
                 },
-                "cpu_limit": {
+                "cpuLimit": {
                     "type": "string"
                 },
-                "cpu_request": {
+                "cpuRequest": {
                     "type": "string"
                 },
-                "memory_limit": {
+                "memoryLimit": {
                     "type": "string"
                 },
-                "memory_request": {
+                "memoryRequest": {
                     "type": "string"
                 },
                 "namespace": {
                     "type": "string"
                 },
-                "template_name": {
+                "templateName": {
                     "type": "string",
                     "maxLength": 40,
                     "minLength": 2
