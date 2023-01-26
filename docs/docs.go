@@ -41,8 +41,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Sample result: \"{\\\"daemonsets\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_daemonsets\\\":0,\\\"status\\\":200}"
+                    "201": {
+                        "description": "Sample result: \"{\\\"message\\\":\\\"k8s resources have been created successfully\\\",\\\"status\\\":201}"
                     }
                 }
             }
@@ -219,8 +219,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":200}"
+                    "201": {
+                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":201}"
                     }
                 }
             }
@@ -250,8 +250,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":200}"
+                    "201": {
+                        "description": "Sample result: \"{\\\"message\\\":\\\"pod has been created successfully\\\",\\\"status\\\":201}"
                     }
                 }
             }
