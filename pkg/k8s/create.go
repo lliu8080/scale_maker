@@ -73,8 +73,9 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 			log.Println("Error: can not decode unstructured data, " + err.Error())
 			return []model.UnstructuredObj{}, err
 		}
-		if resourceKind != "" && resourceKind != unstructuredObj.Obj["Kind"] {
-			err := errors.New("Data did not match resource kind" + resourceKind)
+
+		if resourceKind != "" && resourceKind != unstructuredObj.Obj["Kind"].(string) {
+			err := errors.New("Data did not match resource kind " + resourceKind)
 			return []model.UnstructuredObj{}, err
 		}
 		objs = append(objs, unstructuredObj)

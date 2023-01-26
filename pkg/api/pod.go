@@ -48,7 +48,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": http.StatusInternalServerError,
 			"message": "Error: unable to retrieve template " +
-				cpuLoadTestPodTemplate + " with error " + err.Error() + "!",
+				cpuLoadTestPodTemplate + " with error - " + err.Error() + "!",
 		})
 	}
 
@@ -68,7 +68,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate, data, resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
-			"message": "Error: create " + resourceKind + " failed with error " + err.Error() + "!",
+			"message": "Error: create " + resourceKind + " failed with error - " + err.Error() + "!",
 		})
 	}
 
@@ -94,7 +94,7 @@ func createPodFromBody(c *fiber.Ctx) error {
 	if err := k8s.CreateReourceFromData(kc, c.Body(), resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
-			"message": "Error: create " + resourceKind + " failed with error " + err.Error() + "!",
+			"message": "Error: create " + resourceKind + " failed with error - " + err.Error() + "!",
 		})
 	}
 

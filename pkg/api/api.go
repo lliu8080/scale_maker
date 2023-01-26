@@ -38,16 +38,6 @@ func newK8SClient() {
 	kc.DynamicClient = dynamic.NewForConfigOrDie(config)
 }
 
-// func loadDefaultK8STemplates() {
-// 	//var err error
-// 	cpuLoadTestPodTemplate := "./templates/cpu_load_test_pod.yaml"
-// 	cpuLoadTestPodFile, err := ioutil.ReadFile(cpuLoadTestPodTemplate)
-// 	if err != nil {
-// 		log.Fatal("Error: can not load cpuLoadTestPodTemplate with error " + err.Error())
-// 	}
-// 	kt.cpuLoadTestPod = yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(cpuLoadTestPodFile), 100)
-// }
-
 // InitialSetup doc
 func InitialSetup() *fiber.App {
 	config.NewConfig()
