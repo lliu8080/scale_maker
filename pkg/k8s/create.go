@@ -74,7 +74,7 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 			return []model.UnstructuredObj{}, err
 		}
 
-		if resourceKind != "" && resourceKind != unstructuredObj.Obj["Kind"].(string) {
+		if resourceKind != "" && resourceKind != unstructuredObj.Obj["kind"].(string) {
 			err := errors.New("Data did not match resource kind " + resourceKind)
 			return []model.UnstructuredObj{}, err
 		}
