@@ -36,6 +36,7 @@ func listPods(c *fiber.Ctx) error {
 //	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
 //	@Router			/api/v1/pod/template/create [post]
 func createPodFromTemplate(c *fiber.Ctx) error {
+	resourceKind := "Pod"
 	p := new(form.UnstructuredRequest)
 	if err := c.BodyParser(&p); err != nil {
 		return c.Status(http.StatusBadRequest).SendString("Error parsing request payload with error: " + err.Error())
@@ -61,18 +62,19 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 		"cpuLimit":      p.CPULimit,
 		"memoryLimit":   p.MemoryLimit,
 		"commandParams": p.CommandParams,
+		"testLabel":     p.TestLabel,
 	}
 
-	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate, data); err != nil {
+	if err := k8s.CreateReourceFromTempate(kc, cpuLoadTestPodTemplate, data, resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
-			"message": "Error: create pod failed with error " + err.Error() + "!",
+			"message": "Error: create " + resourceKind + " failed with error " + err.Error() + "!",
 		})
 	}
 
 	return c.Status(http.StatusCreated).JSON(fiber.Map{
 		"status":  http.StatusCreated,
-		"message": "pod has been created successfully",
+		"message": resourceKind + " has been created successfully",
 	})
 }
 
@@ -88,15 +90,16 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 //	@Router			/api/v1/pod/yaml/create [post]
 func createPodFromBody(c *fiber.Ctx) error {
 	c.Accepts("application/yaml")
-	if err := k8s.CreateReourceFromData(kc, c.Body()); err != nil {
+	resourceKind := "Pod"
+	if err := k8s.CreateReourceFromData(kc, c.Body(), resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
-			"message": "Error: create pod failed with error " + err.Error() + "!",
+			"message": "Error: create " + resourceKind + " failed with error " + err.Error() + "!",
 		})
 	}
 
 	return c.Status(http.StatusCreated).JSON(fiber.Map{
 		"status":  http.StatusCreated,
-		"message": "pod has been created successfully",
+		"message": resourceKind + " has been created successfully",
 	})
 }
