@@ -22,7 +22,8 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 	app.Use(recover.New())
 	app.Use(logger.New())
 
-	timeOut := time.Duration(180) // timeout in 3 minutes
+	timeOut := time.Duration(300) // requests timeout in 5 minutes
+
 	// Create a /api/v1 endpoint
 	v1 := app.Group("/api/v1")
 
@@ -48,6 +49,9 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 
 	// statefulset related APIs
 	v1.Get("/statefulset/list", timeout.New(listStatefulsets, timeOut*time.Second))
+
+	// statefulset related APIs
+	v1.Get("/bulk/create", timeout.New(createResourcesFromBody, timeOut*time.Second))
 
 	// Bind handlers
 	v1.Get("/ping", timeout.New(getStatus, timeOut*time.Second))

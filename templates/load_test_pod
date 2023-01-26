@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: load-test-pod-{{ .instanceName }}
+  name: stress-test-pod-{{ .instanceName }}
   namespace: {{ .namespace }}
 spec:
   containers:
-    - name: load-test-pod
+    - name: stree-test-pod
       image: nuc.lliu.ca/lliu/scale_maker:51
       command: ["/bin/bash"]
       args: ["-c", "stress-ng {{ .commandParams }}"]
+      restartPolicy: Never
       livenessProbe:
         exec:
           command:

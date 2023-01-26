@@ -33,7 +33,7 @@ func listPods(c *fiber.Ctx) error {
 //	@Accept			application/json
 //	@Param			body_param	body	form.UnstructuredRequest	true	"body_param"
 //	@Produce		json
-//	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
+//	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
 //	@Router			/api/v1/pod/template/create [post]
 func createPodFromTemplate(c *fiber.Ctx) error {
 	p := new(form.UnstructuredRequest)
@@ -69,8 +69,9 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 			"message": "Error: create pod failed with error " + err.Error() + "!",
 		})
 	}
-	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"status":  http.StatusOK,
+
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"status":  http.StatusCreated,
 		"message": "pod has been created successfully",
 	})
 }
@@ -83,7 +84,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 //	@Accept			application/yaml
 //	@Param			body_param	body	string	true	"body_param"
 //	@Produce		json
-//	@Success		200	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":200}" string
+//	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
 //	@Router			/api/v1/pod/yaml/create [post]
 func createPodFromBody(c *fiber.Ctx) error {
 	c.Accepts("application/yaml")
@@ -93,8 +94,9 @@ func createPodFromBody(c *fiber.Ctx) error {
 			"message": "Error: create pod failed with error " + err.Error() + "!",
 		})
 	}
-	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"status":  http.StatusOK,
+
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"status":  http.StatusCreated,
 		"message": "pod has been created successfully",
 	})
 }
