@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: stree-test-pod
-      image: nuc.lliu.ca/lliu/scale_maker:51
+      image: nuc.lliu.ca/lliu/scale_maker:54
       command: ["/bin/bash"]
       args: ["-c", "stress-ng {{ .commandParams }}"]
       restartPolicy: Never

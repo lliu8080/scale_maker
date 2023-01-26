@@ -51,7 +51,7 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 	v1.Get("/statefulset/list", timeout.New(listStatefulsets, timeOut*time.Second))
 
 	// statefulset related APIs
-	v1.Get("/bulk/create", timeout.New(createResourcesFromBody, timeOut*time.Second))
+	v1.Post("/bulk/create", timeout.New(createResourcesFromBody, timeOut*time.Second))
 
 	// Bind handlers
 	v1.Get("/ping", timeout.New(getStatus, timeOut*time.Second))
