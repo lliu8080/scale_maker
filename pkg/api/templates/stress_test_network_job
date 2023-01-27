@@ -6,27 +6,29 @@ metadata:
   name: stress-test-job-{{ .instanceName }}
   namespace: {{ .namespace }}
 spec:
-  containers:
-    - name: iperf-test
-      image: nuc.lliu.ca/lliu/scale_maker:56
-      command: ["/bin/bash"]
-      args: ["-c", "iperf {{ .commandParams }}"]
-      livenessProbe:
-        exec:
-          command:
-          - /bin/true
-      readinessProbe:
-        exec:
-          command:
-          - /bin/true
-      resources:
-        requests:
-          cpu: "{{ .cpuRequest }}"
-          memory: "{{ .memoryRequest }}"
-        limits:
-          cpu: "{{ .cpuLimit }}"
-          memory: "{{ .memoryLimit }}"
+  parallelism: 1
+  template:
+    spec:
+      containers:
+      - name: iperf-test
+        image: nuc.lliu.ca/lliu/scale_maker:56
+        command: ["/bin/bash"]
+        args: ["-c", "iperf {{ .commandParams }}"]
+        livenessProbe:
+          exec:
+            command:
+            - /bin/true
+        readinessProbe:
+          exec:
+            command:
+            - /bin/true
+        resources:
+          requests:
+            cpu: "{{ .cpuRequest }}"
+            memory: "{{ .memoryRequest }}"
+          limits:
+            cpu: "{{ .cpuLimit }}"
+            memory: "{{ .memoryLimit }}"
       securityContext: {}
-  restartPolicy: Never
-  backoffLimit: 3
+      restartPolicy: Never
   ttlSecondsAfterFinished: 300
