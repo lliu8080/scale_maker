@@ -1,5 +1,5 @@
 definitions:
-  form.UnstructuredRequest:
+  model.UnstructuredRequest:
     properties:
       commandParams:
         type: string
@@ -14,13 +14,18 @@ definitions:
       namespace:
         type: string
       templateName:
-        maxLength: 40
+        maxLength: 50
+        minLength: 2
+        type: string
+      testLabel:
+        maxLength: 50
         minLength: 2
         type: string
     required:
     - commandParams
     - namespace
     - templateName
+    - testLabel
     type: object
 info:
   contact: {}
@@ -45,7 +50,7 @@ paths:
             successfully\",\"status\":201}'
       summary: Creates all the resources passed via request body.
       tags:
-      - Kubernetes Bulk API
+      - Bulk API
   /api/v1/daemonset/list:
     get:
       consumes:
@@ -64,7 +69,7 @@ paths:
           description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
       summary: Gets the list of the Daemonsets in the k8s cluster.
       tags:
-      - Kubernetes
+      - Daemonsets
   /api/v1/deployment/list:
     get:
       consumes:
@@ -83,7 +88,67 @@ paths:
           description: 'Sample result: "{\"deployments\":[],\"namespace\":\"default\",\"number_of_deployments\":0,\"status\":200}'
       summary: Gets the list of the deployments in the k8s cluster.
       tags:
-      - Kubernetes
+      - Deployments
+  /api/v1/job/list:
+    get:
+      consumes:
+      - application/json
+      description: Gets the list of the job in the k8s cluster.
+      parameters:
+      - description: job search by namespace
+        format: string
+        in: query
+        name: namespace
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'Sample result: "{\"jobs\":[],\"namespace\":\"default\",\"number_of_jobs\":0,\"status\":200}'
+      summary: Gets the list of the job in the k8s cluster.
+      tags:
+      - Job
+  /api/v1/job/template/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates the jobs from the job template, currently the method only
+        supports job with one container.
+      parameters:
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          $ref: '#/definitions/model.UnstructuredRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'Sample result: "{\"message\":\"job has been created successfully\",\"status\":201}'
+      summary: Creates the jobs from the job template.
+      tags:
+      - Job
+  /api/v1/job/yaml/create:
+    post:
+      consumes:
+      - application/yaml
+      description: Creates the jobs from the request body.
+      parameters:
+      - description: body_param
+        in: body
+        name: body_param
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'Sample result: "{\"message\":\"job has been created successfully\",\"status\":201}'
+      summary: Creates the jobs from the request body.
+      tags:
+      - Job
   /api/v1/namespace/list:
     get:
       consumes:
@@ -96,7 +161,7 @@ paths:
           description: 'Sample result: "{\"namespaces\":[],\"number_of_namespaces\":0,\"status\":200}'
       summary: Gets the list of the namespaces in the k8s cluster.
       tags:
-      - Kubernetes
+      - Namespace
   /api/v1/node/list:
     get:
       consumes:
@@ -109,7 +174,7 @@ paths:
           description: 'Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}'
       summary: Gets the list of the nodes in the k8s cluster.
       tags:
-      - Kubernetes
+      - Node
   /api/v1/ping:
     get:
       consumes:
@@ -141,7 +206,7 @@ paths:
           description: 'Sample result: "{\"namespace\":\"default\",\"number_of_pods\":0,\"pods\":[],\"status\":200}'
       summary: Gets the list of the pods in the k8s cluster.
       tags:
-      - Kubernetes
+      - Pod
   /api/v1/pod/template/create:
     post:
       consumes:
@@ -154,7 +219,7 @@ paths:
         name: body_param
         required: true
         schema:
-          $ref: '#/definitions/form.UnstructuredRequest'
+          $ref: '#/definitions/model.UnstructuredRequest'
       produces:
       - application/json
       responses:
@@ -162,7 +227,7 @@ paths:
           description: 'Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}'
       summary: Creates the pods from the pod template.
       tags:
-      - Kubernetes
+      - Pod
   /api/v1/pod/yaml/create:
     post:
       consumes:
@@ -182,7 +247,7 @@ paths:
           description: 'Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}'
       summary: Creates the pods from the request body.
       tags:
-      - Kubernetes
+      - Pod
   /api/v1/service/list:
     get:
       consumes:
@@ -201,7 +266,7 @@ paths:
           description: 'Sample result: "{\"namespace\":\"default\",\"number_of_services\":0,\"services\":[],\"status\":200}'
       summary: Gets the list of the services in the k8s cluster.
       tags:
-      - Kubernetes
+      - Service
   /api/v1/statefulset/list:
     get:
       consumes:
@@ -220,5 +285,5 @@ paths:
           description: 'Sample result: "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}'
       summary: Gets the list of the statefulsets in the k8s cluster.
       tags:
-      - Kubernetes
+      - Statefulsets
 swagger: "2.0"

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    stress-test-label: {{ .testLabel }}
+  name: stress-test-pod-{{ .instanceName }}
+  namespace: {{ .namespace }}
+spec:
+  containers:
+    - name: stress-test
+      image: nuc.lliu.ca/lliu/scale_maker:56
+      command: ["/bin/bash"]
+      args: ["-c", "stress-ng {{ .commandParams }}"]
+      livenessProbe:
+        exec:
+          command:
+          - /bin/true
+      readinessProbe:
+        exec:
+          command:
+          - /bin/true
+      resources:
+        requests:
+          cpu: "{{ .cpuRequest }}"
+          memory: "{{ .memoryRequest }}"
+        limits:
+          cpu: "{{ .cpuLimit }}"
+          memory: "{{ .memoryLimit }}"
+      securityContext: {}
+  restartPolicy: Never

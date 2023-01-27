@@ -11,7 +11,7 @@ import (
 //
 //	@Summary		Gets the list of the namespaces in the k8s cluster.
 //	@Description	Gets the list of the namespaces in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Namespace
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespaces\":[],\"number_of_namespaces\":0,\"status\":200}"	string

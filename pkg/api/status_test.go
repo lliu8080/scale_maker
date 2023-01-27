@@ -12,7 +12,7 @@ func TestPingSuccess(t *testing.T) {
 		{
 			Description:   "ping route",
 			Route:         "/api/v1/ping",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"status\":\"alive\"}",
@@ -20,7 +20,7 @@ func TestPingSuccess(t *testing.T) {
 		{
 			Description:   "non existing route",
 			Route:         "/api/v1/ping/",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"status\":\"alive\"}",

@@ -33,7 +33,7 @@ func TestListEmptyNodeSuccess(t *testing.T) {
 		{
 			Description:   "list nodes",
 			Route:         "/api/v1/node/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"nodes\":{},\"number_of_nodes\":0,\"status\":200}",
@@ -49,7 +49,7 @@ func TestListMultiNodesSuccess(t *testing.T) {
 		{
 			Description:   "list nodes",
 			Route:         "/api/v1/node/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"nodes\":{\"test-node-0\":{},\"test-node-1\":{}},\"number_of_nodes\":2,\"status\":200}",

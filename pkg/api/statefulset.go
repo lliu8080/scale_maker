@@ -9,7 +9,7 @@ import (
 //
 //	@Summary		Gets the list of the statefulsets in the k8s cluster.
 //	@Description	Gets the list of the statefulsets in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Statefulsets
 //	@Accept			json
 //	@Param			namespace	query	string	false	"statefulset search by namespace"	Format(string)
 //	@Produce		json

@@ -33,7 +33,7 @@ func TestListEmptyNamespaceSuccess(t *testing.T) {
 		{
 			Description:   "list namespaces",
 			Route:         "/api/v1/namespace/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespaces\":[],\"number_of_namespaces\":0,\"status\":200}",
@@ -49,7 +49,7 @@ func TestListMultiNamespacesSuccess(t *testing.T) {
 		{
 			Description:   "list namespaces",
 			Route:         "/api/v1/namespace/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespaces\":[\"test-namespace-0\",\"test-namespace-1\"],\"number_of_namespaces\":2,\"status\":200}",

@@ -33,7 +33,7 @@ func TestListEmptyDaemonsetSuccess(t *testing.T) {
 		{
 			Description:   "list daemonsets",
 			Route:         "/api/v1/daemonset/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}",
@@ -48,7 +48,7 @@ func TestListMutiDaemonsetSuccess(t *testing.T) {
 		{
 			Description:   "list daemonsets",
 			Route:         "/api/v1/daemonset/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"daemonsets\":[\"test-daemonset-0\",\"test-daemonset-1\"],\"namespace\":\"default\",\"number_of_daemonsets\":2,\"status\":200}",

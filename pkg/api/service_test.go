@@ -33,7 +33,7 @@ func TestListEmptyServiceSuccess(t *testing.T) {
 		{
 			Description:   "list services",
 			Route:         "/api/v1/service/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespace\":\"default\",\"number_of_services\":0,\"services\":[],\"status\":200}",
@@ -48,7 +48,7 @@ func TestListMutiServiceSuccess(t *testing.T) {
 		{
 			Description:   "list services",
 			Route:         "/api/v1/service/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespace\":\"default\",\"number_of_services\":2,\"services\":[\"test-service-0\",\"test-service-1\"],\"status\":200}",

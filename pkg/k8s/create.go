@@ -18,11 +18,11 @@ import (
 )
 
 // CreateReourceFromTempate - doc
-func CreateReourceFromTempate(
-	kc KClient, templateFullPath string, templateData map[string]string, resourceKind string) error {
+func CreateReourceFromTempate(kc KClient, templateFullPath string,
+	templateData map[string]string, resourceKind string) error {
 	resource, err := renderResourceFromTemplate(templateFullPath, templateData)
 	if err != nil {
-		log.Println("Error: can not load " + templateFullPath + "with error " + err.Error())
+		log.Println("Error: can not load " + templateFullPath + "with error - " + err.Error())
 		return err
 	}
 	return CreateReourceFromData(kc, resource, resourceKind)
@@ -32,7 +32,7 @@ func CreateReourceFromTempate(
 func CreateReourceFromData(kc KClient, data []byte, resourceKind string) error {
 	resources, err := serializeResources(data, resourceKind)
 	if err != nil {
-		log.Println("Error: can not serialize the resource, " + err.Error())
+		log.Println("Error: can not serialize the resource, error - " + err.Error())
 		return err
 	}
 	resourceNum := len(resources)
@@ -59,7 +59,6 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 		if err := decodedFile.Decode(&rawObj); err != nil {
 			break
 		}
-
 		obj, gvk, err := yaml.NewDecodingSerializer(
 			unstructured.UnstructuredJSONScheme).Decode(rawObj.Raw, nil, nil)
 		if err != nil {
@@ -70,7 +69,7 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 		unstructuredObj.Version = gvk.Version
 		unstructuredObj.Obj, err = runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
 		if err != nil {
-			log.Println("Error: can not decode unstructured data, " + err.Error())
+			log.Println("Error: can not decode unstructured data, error - " + err.Error())
 			return []model.UnstructuredObj{}, err
 		}
 
@@ -90,7 +89,7 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 func createReource(kc KClient, obj model.UnstructuredObj) error {
 
 	unstructuredObj := &unstructured.Unstructured{Object: obj.Obj}
-	gr, err := restmapper.GetAPIGroupResources(kc.ClientSet.Discovery())
+	gr, err := restmapper.GetAPIGroupResources(kc.Discovery)
 	if err != nil {
 		log.Println("Error:  can not get API group resources, " + err.Error())
 		return err
@@ -114,7 +113,7 @@ func createReource(kc KClient, obj model.UnstructuredObj) error {
 	}
 
 	if _, err := dri.Create(context.Background(), unstructuredObj, metav1.CreateOptions{}); err != nil {
-		log.Println("Error: can not create resource, " + err.Error())
+		log.Println("Error: can not create resource, error - " + err.Error())
 		return err
 	}
 	return nil

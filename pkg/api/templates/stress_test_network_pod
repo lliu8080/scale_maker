@@ -1,16 +1,16 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: v1
+kind: Pod
 metadata:
   labels:
     stress-test-label: {{ .testLabel }}
-  name: stress-test-job-{{ .instanceName }}
+  name: stress-test-pod-{{ .instanceName }}
   namespace: {{ .namespace }}
 spec:
   containers:
-    - name: stree-test
+    - name: iperf-test
       image: nuc.lliu.ca/lliu/scale_maker:56
       command: ["/bin/bash"]
-      args: ["-c", "stress-ng {{ .commandParams }}"]
+      args: ["-c", "iperf {{ .commandParams }}"]
       livenessProbe:
         exec:
           command:
@@ -28,5 +28,3 @@ spec:
           memory: "{{ .memoryLimit }}"
       securityContext: {}
   restartPolicy: Never
-  backoffLimit: 3
-  ttlSecondsAfterFinished: 300

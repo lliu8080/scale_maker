@@ -11,7 +11,7 @@ import (
 //
 //	@Summary		Creates all the resources passed via request body.
 //	@Description	Creates all the resources passed via request body.
-//	@Tags			Kubernetes Bulk API
+//	@Tags			Bulk API
 //	@Accept			application/yaml
 //	@Param			body_param	body	string	true	"body_param"
 //	@Produce		json

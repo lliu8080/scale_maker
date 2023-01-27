@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    stress-test-label: test1
+  name: load-test-pod-0
+spec:
+  containers:
+    - name: load-test-container
+      image: nuc.lliu.ca/lliu/scale_maker:51
+      restartPolicy: Never
+      command:
+        - /bin/bash
+        - -c
+        - stress-ng --cpu 0 --cpu-method all -t 5m #--cpu 2 --matrix 1 --mq 3 -t 5m
+      livenessProbe:
+        exec:
+          command:
+          - /bin/true
+      readinessProbe:
+        exec:
+          command:
+          - /bin/true
+      resources:
+        requests:
+          cpu: 2
+          memory: 2048Mi
+        limits:
+          cpu: 2
+          memory: 2048Mi
+      securityContext: {}
+  restartPolicy: Never

@@ -9,7 +9,7 @@ import (
 //
 //	@Summary		Gets the list of the services in the k8s cluster.
 //	@Description	Gets the list of the services in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Service
 //	@Accept			json
 //	@Param			namespace	query	string	false	"service search by namespace"	Format(string)
 //	@Produce		json

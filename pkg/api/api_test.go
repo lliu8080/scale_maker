@@ -11,6 +11,7 @@ import (
 	fakeDynamic "k8s.io/client-go/dynamic/fake"
 	fakek8s "k8s.io/client-go/kubernetes/fake"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/config"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
 var testApp *fiber.App
@@ -28,6 +29,7 @@ func newK8STestClient() {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
 	kc.DynamicClient = fakeDynamic.NewSimpleDynamicClient(runtime.NewScheme())
+	kc.Discovery = util.SetupDiscovery(kc)
 }
 
 // InitialSetup doc

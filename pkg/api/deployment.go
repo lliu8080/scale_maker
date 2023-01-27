@@ -9,7 +9,7 @@ import (
 //
 //	@Summary		Gets the list of the deployments in the k8s cluster.
 //	@Description	Gets the list of the deployments in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Deployments
 //	@Accept			json
 //	@Param			namespace	query	string	false	"deployment search by namespace"	Format(string)
 //	@Produce		json

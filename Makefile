@@ -9,11 +9,11 @@ doc:
 run:
 	go run ./main.go
 test:
-	go test ./...
+	go test `go list ./... | grep -v /docs`
 testv:
-	go test ./... -v -cover
+	go test `go list ./... | grep -v /docs` -v -cover
 cov:
-	go test ./... -coverprofile cp.out
+	go test `go list ./... | grep -v /docs` -coverprofile cp.out
 	go tool cover -html=cp.out
 rpm:
 	rm -rf ./releases/

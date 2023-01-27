@@ -9,34 +9,34 @@ import (
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
-// listPods gets the list of the pods in the k8s cluster.
+// listJobs gets the list of the job in the k8s cluster.
 //
-//	@Summary		Gets the list of the pods in the k8s cluster.
-//	@Description	Gets the list of the pods in the k8s cluster.
-//	@Tags			Pod
+//	@Summary		Gets the list of the job in the k8s cluster.
+//	@Description	Gets the list of the job in the k8s cluster.
+//	@tags			Job
 //	@Accept			json
-//	@Param			namespace	query	string	false	"pod search by namespace"	Format(string)
+//	@Param			namespace	query	string	false	"job search by namespace"	Format(string)
 //	@Produce		json
-//	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_pods\":0,\"pods\":[],\"status\":200}" string
-//	@Router			/api/v1/pod/list [get]
-func listPods(c *fiber.Ctx) error {
-	resource := "pods"
+//	@Success		200	"Sample result: "{\"jobs\":[],\"namespace\":\"default\",\"number_of_jobs\":0,\"status\":200}" string
+//	@Router			/api/v1/job/list [get]
+func listJobs(c *fiber.Ctx) error {
+	resource := "jobs"
 	namespace := c.Query("namespace")
-	return k8s.ListResources(c, kc, "", "v1", resource, namespace)
+	return k8s.ListResources(c, kc, "batch", "v1", resource, namespace)
 }
 
-// createPodFromTemplate creates the pods from the pod template.
+// createJobFromTemplate creates the jobs from the job template.
 //
-//	@Summary		Creates the pods from the pod template.
-//	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
-//	@Tags			Pod
+//	@Summary		Creates the jobs from the job template.
+//	@Description	Creates the jobs from the job template, currently the method only supports job with one container.
+//	@tags			Job
 //	@Accept			application/json
 //	@Param			body_param	body	model.UnstructuredRequest	true	"body_param"
 //	@Produce		json
-//	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
-//	@Router			/api/v1/pod/template/create [post]
-func createPodFromTemplate(c *fiber.Ctx) error {
-	resourceKind := "Pod"
+//	@Success		201	"Sample result: "{\"message\":\"job has been created successfully\",\"status\":201}" string
+//	@Router			/api/v1/job/template/create [post]
+func createJobFromTemplate(c *fiber.Ctx) error {
+	resourceKind := "Job"
 	p := new(model.UnstructuredRequest)
 	if err := c.BodyParser(&p); err != nil {
 		return c.Status(http.StatusBadRequest).SendString(
@@ -44,12 +44,12 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	}
 
 	// check template
-	cpuLoadTestPodTemplate := "./templates/" + p.TemplateName
-	if _, err := util.CheckFileExists(cpuLoadTestPodTemplate); err != nil {
+	cpuLoadTestJobTemplate := "./templates/" + p.TemplateName
+	if _, err := util.CheckFileExists(cpuLoadTestJobTemplate); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": http.StatusInternalServerError,
 			"message": "Error: unable to retrieve template " +
-				cpuLoadTestPodTemplate + " with error - " + err.Error() + "!",
+				cpuLoadTestJobTemplate + " with error - " + err.Error() + "!",
 		})
 	}
 
@@ -67,7 +67,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	}
 
 	if err := k8s.CreateReourceFromTempate(
-		kc, cpuLoadTestPodTemplate, data, resourceKind); err != nil {
+		kc, cpuLoadTestJobTemplate, data, resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
 			"message": "Error: create " + resourceKind + " failed with error - " + err.Error() + "!",
@@ -80,19 +80,19 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	})
 }
 
-// createPodFromBody creates the pods from the request body.
+// createJobFromBody creates the jobs from the request body.
 //
-//	@Summary		Creates the pods from the request body.
-//	@Description	Creates the pods from the request body.
-//	@Tags			Pod
+//	@Summary		Creates the jobs from the request body.
+//	@Description	Creates the jobs from the request body.
+//	@tags			Job
 //	@Accept			application/yaml
 //	@Param			body_param	body	string	true	"body_param"
 //	@Produce		json
-//	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
-//	@Router			/api/v1/pod/yaml/create [post]
-func createPodFromBody(c *fiber.Ctx) error {
+//	@Success		201	"Sample result: "{\"message\":\"job has been created successfully\",\"status\":201}" string
+//	@Router			/api/v1/job/yaml/create [post]
+func createJobFromBody(c *fiber.Ctx) error {
 	c.Accepts("application/yaml")
-	resourceKind := "Pod"
+	resourceKind := "Job"
 	if err := k8s.CreateReourceFromData(kc, c.Body(), resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,

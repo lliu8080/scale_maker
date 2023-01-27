@@ -33,7 +33,7 @@ func TestListEmptyDeploymentSuccess(t *testing.T) {
 		{
 			Description:   "list deployments",
 			Route:         "/api/v1/deployment/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"deployments\":[],\"namespace\":\"default\",\"number_of_deployments\":0,\"status\":200}",
@@ -48,7 +48,7 @@ func TestListMutiDeploymentSuccess(t *testing.T) {
 		{
 			Description:   "list deployments",
 			Route:         "/api/v1/deployment/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"deployments\":[\"test-deployment-0\",\"test-deployment-1\"],\"namespace\":\"default\",\"number_of_deployments\":2,\"status\":200}",

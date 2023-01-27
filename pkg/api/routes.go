@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/timeout"
 	"github.com/gofiber/swagger"
+	_ "nuc.lliu.ca/gitea/app/scale_maker/docs" // swagger doc
 )
 
 func setupRoutesandMiddleware(app *fiber.App, testing bool) {
@@ -43,6 +44,11 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 	v1.Get("/pod/list", timeout.New(listPods, timeOut*time.Second))
 	v1.Post("/pod/template/create", timeout.New(createPodFromTemplate, timeOut*time.Second))
 	v1.Post("/pod/yaml/create", timeout.New(createPodFromBody, timeOut*time.Second))
+
+	// job related APIs
+	v1.Get("/job/list", timeout.New(listJobs, timeOut*time.Second))
+	v1.Post("/job/template/create", timeout.New(createJobFromTemplate, timeOut*time.Second))
+	v1.Post("/job/yaml/create", timeout.New(createJobFromBody, timeOut*time.Second))
 
 	// service related APIs
 	v1.Get("/service/list", timeout.New(listServices, timeOut*time.Second))

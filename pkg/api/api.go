@@ -19,8 +19,6 @@ import (
 
 var kc k8s.KClient
 
-// var kt k8sTemplates
-
 func newK8SClient() {
 	var err error
 	// config, err := rest.InClusterConfig()
@@ -36,6 +34,7 @@ func newK8SClient() {
 		log.Fatal("Error: unable to create normal Kubernetes clientSet.")
 	}
 	kc.DynamicClient = dynamic.NewForConfigOrDie(config)
+	kc.Discovery = kc.ClientSet.Discovery()
 }
 
 // InitialSetup doc

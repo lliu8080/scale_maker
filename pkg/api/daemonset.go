@@ -9,7 +9,7 @@ import (
 //
 //	@Summary		Gets the list of the Daemonsets in the k8s cluster.
 //	@Description	Gets the list of the daemonsets in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Daemonsets
 //	@Accept			json
 //	@Param			namespace	query	string	false	"daemonset search by namespace"	Format(string)
 //	@Produce		json

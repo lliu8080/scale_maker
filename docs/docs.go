@@ -26,7 +26,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes Bulk API"
+                    "Bulk API"
                 ],
                 "summary": "Creates all the resources passed via request body.",
                 "parameters": [
@@ -57,7 +57,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Daemonsets"
                 ],
                 "summary": "Gets the list of the Daemonsets in the k8s cluster.",
                 "parameters": [
@@ -86,7 +86,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Deployments"
                 ],
                 "summary": "Gets the list of the deployments in the k8s cluster.",
                 "parameters": [
@@ -105,6 +105,97 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/job/list": {
+            "get": {
+                "description": "Gets the list of the job in the k8s cluster.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Job"
+                ],
+                "summary": "Gets the list of the job in the k8s cluster.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "job search by namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sample result: \"{\\\"jobs\\\":[],\\\"namespace\\\":\\\"default\\\",\\\"number_of_jobs\\\":0,\\\"status\\\":200}"
+                    }
+                }
+            }
+        },
+        "/api/v1/job/template/create": {
+            "post": {
+                "description": "Creates the jobs from the job template, currently the method only supports job with one container.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Job"
+                ],
+                "summary": "Creates the jobs from the job template.",
+                "parameters": [
+                    {
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UnstructuredRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Sample result: \"{\\\"message\\\":\\\"job has been created successfully\\\",\\\"status\\\":201}"
+                    }
+                }
+            }
+        },
+        "/api/v1/job/yaml/create": {
+            "post": {
+                "description": "Creates the jobs from the request body.",
+                "consumes": [
+                    "application/yaml"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Job"
+                ],
+                "summary": "Creates the jobs from the request body.",
+                "parameters": [
+                    {
+                        "description": "body_param",
+                        "name": "body_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Sample result: \"{\\\"message\\\":\\\"job has been created successfully\\\",\\\"status\\\":201}"
+                    }
+                }
+            }
+        },
         "/api/v1/namespace/list": {
             "get": {
                 "description": "Gets the list of the namespaces in the k8s cluster.",
@@ -115,7 +206,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Namespace"
                 ],
                 "summary": "Gets the list of the namespaces in the k8s cluster.",
                 "responses": {
@@ -135,7 +226,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Node"
                 ],
                 "summary": "Gets the list of the nodes in the k8s cluster.",
                 "responses": {
@@ -175,7 +266,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Pod"
                 ],
                 "summary": "Gets the list of the pods in the k8s cluster.",
                 "parameters": [
@@ -204,7 +295,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Pod"
                 ],
                 "summary": "Creates the pods from the pod template.",
                 "parameters": [
@@ -214,7 +305,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/form.UnstructuredRequest"
+                            "$ref": "#/definitions/model.UnstructuredRequest"
                         }
                     }
                 ],
@@ -235,7 +326,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Pod"
                 ],
                 "summary": "Creates the pods from the request body.",
                 "parameters": [
@@ -266,7 +357,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Service"
                 ],
                 "summary": "Gets the list of the services in the k8s cluster.",
                 "parameters": [
@@ -295,7 +386,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Kubernetes"
+                    "Statefulsets"
                 ],
                 "summary": "Gets the list of the statefulsets in the k8s cluster.",
                 "parameters": [
@@ -316,12 +407,13 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "form.UnstructuredRequest": {
+        "model.UnstructuredRequest": {
             "type": "object",
             "required": [
                 "commandParams",
                 "namespace",
-                "templateName"
+                "templateName",
+                "testLabel"
             ],
             "properties": {
                 "commandParams": {
@@ -344,7 +436,12 @@ const docTemplate = `{
                 },
                 "templateName": {
                     "type": "string",
-                    "maxLength": 40,
+                    "maxLength": 50,
+                    "minLength": 2
+                },
+                "testLabel": {
+                    "type": "string",
+                    "maxLength": 50,
                     "minLength": 2
                 }
             }

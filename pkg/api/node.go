@@ -11,7 +11,7 @@ import (
 //
 //	@Summary		Gets the list of the nodes in the k8s cluster.
 //	@Description	Gets the list of the nodes in the k8s cluster.
-//	@Tags			Kubernetes
+//	@Tags			Node
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}""	string

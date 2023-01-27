@@ -33,7 +33,7 @@ func TestListEmptyStatefulsetSuccess(t *testing.T) {
 		{
 			Description:   "list statefulsets",
 			Route:         "/api/v1/statefulset/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}",
@@ -48,7 +48,7 @@ func TestListMutiStatefulsetSuccess(t *testing.T) {
 		{
 			Description:   "list statefulsets",
 			Route:         "/api/v1/statefulset/list",
-			HttpMethod:    "GET",
+			HTTPMethod:    "GET",
 			ExpectedError: false,
 			ExpectedCode:  200,
 			ExpectedBody:  "{\"namespace\":\"default\",\"number_of_statefulsets\":2,\"statefulsets\":[\"test-statefulset-0\",\"test-statefulset-1\"],\"status\":200}",
