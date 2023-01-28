@@ -55,6 +55,13 @@
                         "description": "daemonset search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search daemonset by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -84,6 +91,13 @@
                         "description": "deployment search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search deployment by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -112,6 +126,13 @@
                         "format": "string",
                         "description": "job search by namespace",
                         "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search job by label",
+                        "name": "label",
                         "in": "query"
                     }
                 ],
@@ -264,6 +285,13 @@
                         "description": "pod search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search pod by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -355,6 +383,13 @@
                         "description": "service search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search service by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -384,6 +419,13 @@
                         "description": "statefulset search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search statefulset by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -400,8 +442,7 @@
             "required": [
                 "commandParams",
                 "namespace",
-                "templateName",
-                "testLabel"
+                "templateName"
             ],
             "properties": {
                 "commandParams": {
@@ -428,9 +469,7 @@
                     "minLength": 2
                 },
                 "testLabel": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2
+                    "type": "string"
                 }
             }
         }

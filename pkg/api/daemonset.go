@@ -12,7 +12,7 @@ import (
 //	@Tags			Daemonsets
 //	@Accept			json
 //	@Param			namespace	query	string	false	"daemonset search by namespace"	Format(string)
-//	@Param			label	query	string	false	"search daemonset by label"	Format(string)
+//	@Param			label		query	string	false	"search daemonset by label"		Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"daemonsets\":[],\"namespace\":\"default\",\"number_of_daemonsets\":0,\"status\":200}" string
 //	@Router			/api/v1/daemonset/list [get]

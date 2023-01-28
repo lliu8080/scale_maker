@@ -12,7 +12,7 @@ import (
 //	@Tags			Statefulsets
 //	@Accept			json
 //	@Param			namespace	query	string	false	"statefulset search by namespace"	Format(string)
-//	@Param			label	query	string	false	"search statefulset by label"	Format(string)
+//	@Param			label		query	string	false	"search statefulset by label"		Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}"	string
 //	@Router			/api/v1/statefulset/list [get]

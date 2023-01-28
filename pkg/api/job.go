@@ -14,7 +14,7 @@ import (
 //	@tags			Job
 //	@Accept			json
 //	@Param			namespace	query	string	false	"job search by namespace"	Format(string)
-//	@Param			label	query	string	false	"search job by label"	Format(string)
+//	@Param			label		query	string	false	"search job by label"		Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"jobs\":[],\"namespace\":\"default\",\"number_of_jobs\":0,\"status\":200}" string
 //	@Router			/api/v1/job/list [get]

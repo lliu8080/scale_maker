@@ -67,6 +67,13 @@ const docTemplate = `{
                         "description": "daemonset search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search daemonset by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -96,6 +103,13 @@ const docTemplate = `{
                         "description": "deployment search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search deployment by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -124,6 +138,13 @@ const docTemplate = `{
                         "format": "string",
                         "description": "job search by namespace",
                         "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search job by label",
+                        "name": "label",
                         "in": "query"
                     }
                 ],
@@ -276,6 +297,13 @@ const docTemplate = `{
                         "description": "pod search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search pod by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -367,6 +395,13 @@ const docTemplate = `{
                         "description": "service search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search service by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -396,6 +431,13 @@ const docTemplate = `{
                         "description": "statefulset search by namespace",
                         "name": "namespace",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "search statefulset by label",
+                        "name": "label",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -412,8 +454,7 @@ const docTemplate = `{
             "required": [
                 "commandParams",
                 "namespace",
-                "templateName",
-                "testLabel"
+                "templateName"
             ],
             "properties": {
                 "commandParams": {
@@ -440,9 +481,7 @@ const docTemplate = `{
                     "minLength": 2
                 },
                 "testLabel": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2
+                    "type": "string"
                 }
             }
         }

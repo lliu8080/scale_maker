@@ -14,7 +14,7 @@ import (
 //	@Tags			Pod
 //	@Accept			json
 //	@Param			namespace	query	string	false	"pod search by namespace"	Format(string)
-//	@Param			label	query	string	false	"search pod by label"	Format(string)
+//	@Param			label		query	string	false	"search pod by label"		Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_pods\":0,\"pods\":[],\"status\":200}" string
 //	@Router			/api/v1/pod/list [get]
