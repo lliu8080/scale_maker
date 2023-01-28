@@ -1,7 +1,6 @@
 package k8s
 
 import (
-	"context"
 	"log"
 	"net/http"
 
@@ -9,7 +8,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
 )
 
 // ListResources doc
@@ -33,8 +31,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 	}
 
 	list, err := listDynamicK8SObjectByNames(
-		kc.Ctx,
-		kc.DynamicClient,
+		kc,
 		listOption,
 		group,
 		version,
@@ -62,7 +59,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 }
 
 // listDynamicK8SObjectByItems doc
-func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
+func listDynamicK8SObjectByItems(kc KClient,
 	listOption metav1.ListOptions, group, version, resource, namespace string) (
 	[]unstructured.Unstructured, error) {
 	resourceID := schema.GroupVersionResource{
@@ -71,8 +68,8 @@ func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
 		Resource: resource,
 	}
 
-	list, err := dynamic.Resource(resourceID).Namespace(namespace).
-		List(ctx, listOption)
+	list, err := kc.DynamicClient.Resource(resourceID).Namespace(namespace).
+		List(kc.Ctx, listOption)
 	if err != nil {
 		return nil, err
 	}
@@ -81,11 +78,11 @@ func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
 }
 
 // listDynamicK8SObjectByNames doc
-func listDynamicK8SObjectByNames(ctx context.Context, dynamic dynamic.Interface,
+func listDynamicK8SObjectByNames(kc KClient,
 	listOption metav1.ListOptions, group, version, resource, namespace string) (
 	[]string, error) {
 
-	items, err := listDynamicK8SObjectByItems(ctx, dynamic, listOption,
+	items, err := listDynamicK8SObjectByItems(kc, listOption,
 		group, version, resource, namespace)
 	if err != nil {
 		return nil, err

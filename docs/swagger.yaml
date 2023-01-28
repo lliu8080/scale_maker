@@ -1,5 +1,5 @@
 definitions:
-  model.UnstructuredRequest:
+  model.UnstructuredCreateRequest:
     properties:
       commandParams:
         type: string
@@ -132,7 +132,7 @@ paths:
         name: body_param
         required: true
         schema:
-          $ref: '#/definitions/model.UnstructuredRequest'
+          $ref: '#/definitions/model.UnstructuredCreateRequest'
       produces:
       - application/json
       responses:
@@ -236,7 +236,7 @@ paths:
         name: body_param
         required: true
         schema:
-          $ref: '#/definitions/model.UnstructuredRequest'
+          $ref: '#/definitions/model.UnstructuredCreateRequest'
       produces:
       - application/json
       responses:

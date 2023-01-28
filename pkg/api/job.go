@@ -31,7 +31,7 @@ func listJobs(c *fiber.Ctx) error {
 //	@Description	Creates the jobs from the job template, currently the method only supports job with one container.
 //	@tags			Job
 //	@Accept			application/json
-//	@Param			body_param	body	model.UnstructuredRequest	true	"body_param"
+//	@Param			body_param	body	model.UnstructuredCreateRequest	true	"body_param"
 //	@Produce		json
 //	@Success		201	"Sample result: "{\"message\":\"job has been created successfully\",\"status\":201}" string
 //	@Router			/api/v1/job/template/create [post]

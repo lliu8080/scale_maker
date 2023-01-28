@@ -175,7 +175,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UnstructuredRequest"
+                            "$ref": "#/definitions/model.UnstructuredCreateRequest"
                         }
                     }
                 ],
@@ -333,7 +333,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UnstructuredRequest"
+                            "$ref": "#/definitions/model.UnstructuredCreateRequest"
                         }
                     }
                 ],
@@ -449,7 +449,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.UnstructuredRequest": {
+        "model.UnstructuredCreateRequest": {
             "type": "object",
             "required": [
                 "commandParams",

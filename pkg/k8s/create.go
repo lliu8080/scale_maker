@@ -21,7 +21,7 @@ import (
 
 // ParseCreateResource doc
 func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
-	p := new(model.UnstructuredRequest)
+	p := new(model.UnstructuredCreateRequest)
 	if err := c.BodyParser(&p); err != nil {
 		return errors.New("Error parsing request payload with error: " + err.Error())
 	}

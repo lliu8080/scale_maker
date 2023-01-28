@@ -31,7 +31,7 @@ func listPods(c *fiber.Ctx) error {
 //	@Description	Creates the pods from the pod template, currently the method only supports pod with one container.
 //	@Tags			Pod
 //	@Accept			application/json
-//	@Param			body_param	body	model.UnstructuredRequest	true	"body_param"
+//	@Param			body_param	body	model.UnstructuredCreateRequest	true	"body_param"
 //	@Produce		json
 //	@Success		201	"Sample result: "{\"message\":\"pod has been created successfully\",\"status\":201}" string
 //	@Router			/api/v1/pod/template/create [post]
@@ -75,4 +75,8 @@ func createPodFromBody(c *fiber.Ctx) error {
 		"status":  http.StatusCreated,
 		"message": resourceKind + " has been created successfully",
 	})
+}
+
+func deletePod(c *fiber.Ctx) error {
+	return nil
 }

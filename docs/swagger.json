@@ -163,7 +163,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UnstructuredRequest"
+                            "$ref": "#/definitions/model.UnstructuredCreateRequest"
                         }
                     }
                 ],
@@ -321,7 +321,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UnstructuredRequest"
+                            "$ref": "#/definitions/model.UnstructuredCreateRequest"
                         }
                     }
                 ],
@@ -437,7 +437,7 @@
         }
     },
     "definitions": {
-        "model.UnstructuredRequest": {
+        "model.UnstructuredCreateRequest": {
             "type": "object",
             "required": [
                 "commandParams",
