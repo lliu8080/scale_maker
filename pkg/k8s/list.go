@@ -13,10 +13,16 @@ import (
 )
 
 // ListResources doc
-func ListResources(c *fiber.Ctx, kc KClient, group, version, resource, namespace string) error {
+func ListResources(c *fiber.Ctx, kc KClient, group, version,
+	resource, namespace, label string) error {
 	if namespace == "" {
 		namespace = "default"
 	}
+
+	listOption := metav1.ListOptions{
+		LabelSelector: label,
+	}
+
 	if kc.DynamicClient == nil {
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
@@ -29,6 +35,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version, resource, namespace
 	list, err := listDynamicK8SObjectByNames(
 		kc.Ctx,
 		kc.DynamicClient,
+		listOption,
 		group,
 		version,
 		resource,
@@ -36,7 +43,8 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version, resource, namespace
 	)
 
 	if err != nil {
-		log.Println("Error: failed create dynamic " + resource + " with error " + err.Error())
+		log.Println("Error: failed create dynamic " + resource +
+			" with error " + err.Error())
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
 				"status":  http.StatusInternalServerError,
@@ -55,7 +63,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version, resource, namespace
 
 // listDynamicK8SObjectByItems doc
 func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
-	group, version, resource, namespace string) (
+	listOption metav1.ListOptions, group, version, resource, namespace string) (
 	[]unstructured.Unstructured, error) {
 	resourceID := schema.GroupVersionResource{
 		Group:    group,
@@ -64,7 +72,7 @@ func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
 	}
 
 	list, err := dynamic.Resource(resourceID).Namespace(namespace).
-		List(ctx, metav1.ListOptions{})
+		List(ctx, listOption)
 	if err != nil {
 		return nil, err
 	}
@@ -74,10 +82,11 @@ func listDynamicK8SObjectByItems(ctx context.Context, dynamic dynamic.Interface,
 
 // listDynamicK8SObjectByNames doc
 func listDynamicK8SObjectByNames(ctx context.Context, dynamic dynamic.Interface,
-	group, version, resource, namespace string) (
+	listOption metav1.ListOptions, group, version, resource, namespace string) (
 	[]string, error) {
 
-	items, err := listDynamicK8SObjectByItems(ctx, dynamic, group, version, resource, namespace)
+	items, err := listDynamicK8SObjectByItems(ctx, dynamic, listOption,
+		group, version, resource, namespace)
 	if err != nil {
 		return nil, err
 	}

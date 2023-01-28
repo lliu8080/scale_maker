@@ -12,11 +12,13 @@ import (
 //	@Tags			Deployments
 //	@Accept			json
 //	@Param			namespace	query	string	false	"deployment search by namespace"	Format(string)
+//	@Param			label	query	string	false	"search deployment by label"	Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"deployments\":[],\"namespace\":\"default\",\"number_of_deployments\":0,\"status\":200}"	string
 //	@Router			/api/v1/deployment/list [get]
 func listDeployments(c *fiber.Ctx) error {
 	resource := "deployments"
 	namespace := c.Query("namespace")
-	return k8s.ListResources(c, kc, "apps", "v1", resource, namespace)
+	label := c.Query("label")
+	return k8s.ListResources(c, kc, "apps", "v1", resource, namespace, label)
 }

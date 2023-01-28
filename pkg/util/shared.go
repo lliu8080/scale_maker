@@ -17,8 +17,12 @@ func CheckFileExists(path string) (bool, error) {
 }
 
 // GenerateRandomHash doc
-func GenerateRandomHash() string {
+func GenerateRandomHash(length int) (string, error) {
+	if length == 0 {
+		return "", errors.New(
+			"Error: length of the hash must be greater than zero")
+	}
 	h := fnv.New64a()
 	h.Write([]byte(time.Now().Round(time.Hour).String()))
-	return hex.EncodeToString(h.Sum(nil))[0:7]
+	return hex.EncodeToString(h.Sum(nil))[0:length], nil
 }

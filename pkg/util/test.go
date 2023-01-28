@@ -4,17 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/discovery"
-	fakediscovery "k8s.io/client-go/discovery/fake"
-	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
 	"sigs.k8s.io/yaml"
 )
 
@@ -93,46 +88,4 @@ func RunAPITests(t *testing.T, app *fiber.App, tests *[]APITest) {
 		// Verify, that the reponse body equals the expected body
 		assert.Equalf(t, test.ExpectedBody, string(body), test.Description)
 	}
-}
-
-// SetupDiscovery doc
-func SetupDiscovery(kc k8s.KClient) discovery.DiscoveryInterface {
-	fakeDiscovery, ok := kc.ClientSet.Discovery().(*fakediscovery.FakeDiscovery)
-	if !ok {
-		log.Fatalf("couldn't convert Discovery() to *FakeDiscovery")
-	}
-	fakeDiscovery.Fake.Resources = []*metav1.APIResourceList{
-		{
-			GroupVersion: "v1",
-			APIResources: []metav1.APIResource{
-				{
-					Kind: "Pod",
-					Name: "Pods",
-				},
-				{
-					Kind: "Service",
-					Name: "Services",
-				},
-			},
-		},
-		{
-			GroupVersion: "batch/v1",
-			APIResources: []metav1.APIResource{
-				{
-					Kind: "Job",
-					Name: "Jobs",
-				},
-			},
-		},
-		{
-			GroupVersion: "apps/v1",
-			APIResources: []metav1.APIResource{
-				{
-					Kind: "Deployment",
-					Name: "Deployments",
-				},
-			},
-		},
-	}
-	return fakeDiscovery
 }

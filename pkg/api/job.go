@@ -5,8 +5,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/k8s"
-	"nuc.lliu.ca/gitea/app/scale_maker/pkg/model"
-	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
 
 // listJobs gets the list of the job in the k8s cluster.
@@ -16,13 +14,15 @@ import (
 //	@tags			Job
 //	@Accept			json
 //	@Param			namespace	query	string	false	"job search by namespace"	Format(string)
+//	@Param			label	query	string	false	"search job by label"	Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"jobs\":[],\"namespace\":\"default\",\"number_of_jobs\":0,\"status\":200}" string
 //	@Router			/api/v1/job/list [get]
 func listJobs(c *fiber.Ctx) error {
 	resource := "jobs"
 	namespace := c.Query("namespace")
-	return k8s.ListResources(c, kc, "batch", "v1", resource, namespace)
+	label := c.Query("label")
+	return k8s.ListResources(c, kc, "batch", "v1", resource, namespace, label)
 }
 
 // createJobFromTemplate creates the jobs from the job template.
@@ -37,40 +37,11 @@ func listJobs(c *fiber.Ctx) error {
 //	@Router			/api/v1/job/template/create [post]
 func createJobFromTemplate(c *fiber.Ctx) error {
 	resourceKind := "Job"
-	p := new(model.UnstructuredRequest)
-	if err := c.BodyParser(&p); err != nil {
-		return c.Status(http.StatusBadRequest).SendString(
-			"Error parsing request payload with error: " + err.Error())
-	}
-
-	// check template
-	cpuLoadTestJobTemplate := "./templates/" + p.TemplateName
-	if _, err := util.CheckFileExists(cpuLoadTestJobTemplate); err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"status": http.StatusInternalServerError,
-			"message": "Error: unable to retrieve template " +
-				cpuLoadTestJobTemplate + " with error - " + err.Error() + "!",
-		})
-	}
-
-	// render template with data
-	instanceName := util.GenerateRandomHash()
-	data := map[string]string{
-		"testLabel":     p.TestLabel,
-		"instanceName":  instanceName,
-		"namespace":     p.Namespace,
-		"commandParams": p.CommandParams,
-		"cpuRequest":    p.CPURequest,
-		"memoryRequest": p.MemoryRequest,
-		"cpuLimit":      p.CPULimit,
-		"memoryLimit":   p.MemoryLimit,
-	}
-
-	if err := k8s.CreateReourceFromTempate(
-		kc, cpuLoadTestJobTemplate, data, resourceKind); err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+	err := k8s.ParseCreateResource(c, kc, resourceKind)
+	if err != nil {
+		c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
-			"message": "Error: create " + resourceKind + " failed with error - " + err.Error() + "!",
+			"message": err.Error(),
 		})
 	}
 

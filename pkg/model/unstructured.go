@@ -20,5 +20,5 @@ type UnstructuredRequest struct {
 	CPULimit      string `json:"cpuLimit"`
 	MemoryLimit   string `json:"memoryLimit"`
 	CommandParams string `json:"commandParams" validate:"required"`
-	TestLabel     string `json:"testLabel" validate:"required,min=2,max=50"`
+	TestLabel     string `json:"testLabel"`
 }

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log"
 
+	"github.com/gofiber/fiber/v2"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -15,7 +16,53 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/restmapper"
 	"nuc.lliu.ca/gitea/app/scale_maker/pkg/model"
+	"nuc.lliu.ca/gitea/app/scale_maker/pkg/util"
 )
+
+// ParseCreateResource doc
+func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
+	p := new(model.UnstructuredRequest)
+	if err := c.BodyParser(&p); err != nil {
+		return errors.New("Error parsing request payload with error: " + err.Error())
+	}
+
+	// check template
+	cpuLoadTestJobTemplate := "./templates/" + p.TemplateName
+	if _, err := util.CheckFileExists(cpuLoadTestJobTemplate); err != nil {
+		return errors.New("Error: unable to retrieve template " +
+			cpuLoadTestJobTemplate + " with error - " + err.Error() + "!")
+	}
+
+	// render template with data
+	instanceName, err := util.GenerateRandomHash(6)
+	if err != nil {
+		return errors.New("Error: unable to generate instance name with error - " +
+			err.Error() + "!")
+	}
+	var label string
+	if p.TestLabel == "" {
+		label = "test"
+	} else {
+		label = p.TestLabel
+	}
+	data := map[string]string{
+		"testLabel":     label,
+		"instanceName":  instanceName,
+		"namespace":     p.Namespace,
+		"commandParams": p.CommandParams,
+		"cpuRequest":    p.CPURequest,
+		"memoryRequest": p.MemoryRequest,
+		"cpuLimit":      p.CPULimit,
+		"memoryLimit":   p.MemoryLimit,
+	}
+
+	if err := CreateReourceFromTempate(
+		kc, cpuLoadTestJobTemplate, data, resourceKind); err != nil {
+		return errors.New("Error: create " + resourceKind + " failed with error - " +
+			err.Error() + "!")
+	}
+	return nil
+}
 
 // CreateReourceFromTempate - doc
 func CreateReourceFromTempate(kc KClient, templateFullPath string,
