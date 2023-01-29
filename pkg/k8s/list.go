@@ -37,6 +37,10 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 
 	// TODO: Investigate better ways to handle workloadName and list names
 	if workloadName != "" {
+		listOption := metav1.ListOptions{
+			LabelSelector: label,
+			FieldSelector: "metadata.name=" + workloadName,
+		}
 		itemList, err := listDynamicK8SObjectByItems(
 			kc,
 			listOption,
@@ -46,7 +50,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 			namespace,
 		)
 		if err != nil {
-			log.Println("Error: failed create dynamic " + resource +
+			log.Println("Error: failed list " + resource +
 				" with error " + err.Error())
 			return c.Status(http.StatusInternalServerError).JSON(
 				fiber.Map{
@@ -73,7 +77,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 	)
 
 	if err != nil {
-		log.Println("Error: failed create dynamic " + resource +
+		log.Println("Error: failed list " + resource +
 			" with error " + err.Error())
 		return c.Status(http.StatusInternalServerError).JSON(
 			fiber.Map{
