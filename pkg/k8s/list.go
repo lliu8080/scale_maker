@@ -13,6 +13,8 @@ import (
 // ListResources doc
 func ListResources(c *fiber.Ctx, kc KClient, group, version,
 	resource string) error {
+
+	var err error
 	namespace := c.Query("namespace")
 	label := c.Query("label")
 	byItem := c.Query("by_item")
@@ -37,7 +39,35 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 		)
 	}
 
-	list, err := listDynamicK8SObjectByNames(
+	// TODO: Investigate better ways to handle byItem/byName
+	if byItem == "true" {
+		itemList, err := listDynamicK8SObjectByItems(
+			kc,
+			listOption,
+			group,
+			version,
+			resource,
+			namespace,
+		)
+		if err != nil {
+			log.Println("Error: failed create dynamic " + resource +
+				" with error " + err.Error())
+			return c.Status(http.StatusInternalServerError).JSON(
+				fiber.Map{
+					"status":  http.StatusInternalServerError,
+					"message": "Error getting result when trying to list " + resource + "!",
+				},
+			)
+		}
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"status":                http.StatusOK,
+			"namespace":             namespace,
+			"number_of_" + resource: len(itemList),
+			resource:                itemList,
+		})
+	}
+
+	stringList, err := listDynamicK8SObjectByNames(
 		kc,
 		listOption,
 		group,
@@ -60,8 +90,8 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status":                http.StatusOK,
 		"namespace":             namespace,
-		"number_of_" + resource: len(list),
-		resource:                list,
+		"number_of_" + resource: len(stringList),
+		resource:                stringList,
 	})
 }
 

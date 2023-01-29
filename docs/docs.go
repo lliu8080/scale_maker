@@ -78,7 +78,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return daemonset results by item with more details, default false.",
+                        "description": "set by_item=true to return daemonset results by item with more details, default false",
                         "name": "by_item",
                         "in": "query"
                     }

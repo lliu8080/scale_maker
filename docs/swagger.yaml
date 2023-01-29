@@ -65,7 +65,7 @@ paths:
         name: label
         type: string
       - description: set by_item=true to return daemonset results by item with more
-          details, default false.
+          details, default false
         format: string
         in: query
         name: by_item
