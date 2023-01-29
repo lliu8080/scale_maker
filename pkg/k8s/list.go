@@ -17,13 +17,9 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 	var err error
 	namespace := c.Query("namespace")
 	label := c.Query("label")
-	byItem := c.Query("by_item")
+	workloadName := c.Query("name")
 	if namespace == "" {
 		namespace = "default"
-	}
-
-	if byItem != "true" {
-		byItem = "false"
 	}
 
 	listOption := metav1.ListOptions{
@@ -39,8 +35,8 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 		)
 	}
 
-	// TODO: Investigate better ways to handle byItem/byName
-	if byItem == "true" {
+	// TODO: Investigate better ways to handle workloadName and list names
+	if workloadName != "" {
 		itemList, err := listDynamicK8SObjectByItems(
 			kc,
 			listOption,
@@ -67,7 +63,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 		})
 	}
 
-	stringList, err := listDynamicK8SObjectByNames(
+	stringList, err := listDynamicK8SObjectNames(
 		kc,
 		listOption,
 		group,
@@ -115,7 +111,7 @@ func listDynamicK8SObjectByItems(kc KClient,
 }
 
 // listDynamicK8SObjectByNames doc
-func listDynamicK8SObjectByNames(kc KClient,
+func listDynamicK8SObjectNames(kc KClient,
 	listOption metav1.ListOptions, group, version, resource, namespace string) (
 	[]string, error) {
 
