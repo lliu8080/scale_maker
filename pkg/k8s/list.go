@@ -49,7 +49,7 @@ func ListResources(c *fiber.Ctx, kc KClient, group, version,
 			resource,
 			namespace,
 		)
-		if err != nil {
+		if err != nil || len(itemList) == 0 {
 			log.Println("Error: failed list " + resource +
 				" with error " + err.Error())
 			return c.Status(http.StatusInternalServerError).JSON(
