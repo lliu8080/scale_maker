@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: stress-test
-        image: nuc.lliu.ca/lliu/scale_maker:62
+        image: nuc.lliu.ca/lliu/scale_maker:67
         command: ["/bin/bash"]
         args: ["-c", "stress-ng {{ .commandParams }}"]
         livenessProbe:

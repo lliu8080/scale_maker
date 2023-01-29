@@ -64,11 +64,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return daemonset results by item with more
-          details, default false
+      - description: return daemonset result by name with details
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json
@@ -94,11 +93,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return deployment results by item with more
-          details, default false.
+      - description: return deployment result by name with more details.
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json
@@ -124,11 +122,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return job results by item with more details,
-          default false.
+      - description: return job result by name with more details.
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json
@@ -234,11 +231,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return pod results by item with more details,
-          default false.
+      - description: return pod result by name with more details.
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json
@@ -305,11 +301,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return service results by item with more
-          details, default false.
+      - description: return service result by name with more details.
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json
@@ -335,11 +330,10 @@ paths:
         in: query
         name: label
         type: string
-      - description: set by_item=true to return statefulset results by item with more
-          details, default false.
+      - description: return statefulset result by name with more details.
         format: string
         in: query
-        name: by_item
+        name: name
         type: string
       produces:
       - application/json

@@ -78,8 +78,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return daemonset results by item with more details, default false",
-                        "name": "by_item",
+                        "description": "return daemonset result by name with details",
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -121,8 +121,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return deployment results by item with more details, default false.",
-                        "name": "by_item",
+                        "description": "return deployment result by name with more details.",
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -164,8 +164,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return job results by item with more details, default false.",
-                        "name": "by_item",
+                        "description": "return job result by name with more details.",
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -329,8 +329,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return pod results by item with more details, default false.",
-                        "name": "by_item",
+                        "description": "return pod result by name with more details.",
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -434,8 +434,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return service results by item with more details, default false.",
-                        "name": "by_item",
+                        "description": "return service result by name with more details.",
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -477,8 +477,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "string",
-                        "description": "set by_item=true to return statefulset results by item with more details, default false.",
-                        "name": "by_item",
+                        "description": "return statefulset result by name with more details.",
+                        "name": "name",
                         "in": "query"
                     }
                 ],

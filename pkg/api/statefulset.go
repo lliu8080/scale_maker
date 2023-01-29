@@ -11,9 +11,9 @@ import (
 //	@Description	Gets the list of the statefulsets in the k8s cluster.
 //	@Tags			Statefulsets
 //	@Accept			json
-//	@Param			namespace	query	string	false	"statefulset search by namespace"															Format(string)
-//	@Param			label		query	string	false	"search statefulset by label"																Format(string)
-//	@Param			by_item		query	string	false	"set by_item=true to return statefulset results by item with more details, default false."	Format(string)
+//	@Param			namespace	query	string	false	"statefulset search by namespace"						Format(string)
+//	@Param			label		query	string	false	"search statefulset by label"							Format(string)
+//	@Param			name		query	string	false	"return statefulset result by name with more details."	Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_statefulsets\":0,\"statefulsets\":[],\"status\":200}"	string
 //	@Router			/api/v1/statefulset/list [get]
