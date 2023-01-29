@@ -11,14 +11,13 @@ import (
 //	@Description	Gets the list of the services in the k8s cluster.
 //	@Tags			Service
 //	@Accept			json
-//	@Param			namespace	query	string	false	"service search by namespace"	Format(string)
-//	@Param			label		query	string	false	"search service by label"		Format(string)
+//	@Param			namespace	query	string	false	"service search by namespace"															Format(string)
+//	@Param			label		query	string	false	"search service by label"																Format(string)
+//	@Param			by_item		query	string	false	"set by_item=true to return service results by item with more details, default false."	Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_services\":0,\"services\":[],\"status\":200}"	string
 //	@Router			/api/v1/service/list [get]
 func listServices(c *fiber.Ctx) error {
 	resource := "services"
-	namespace := c.Query("namespace")
-	label := c.Query("label")
-	return k8s.ListResources(c, kc, "core", "v1", resource, namespace, label)
+	return k8s.ListResources(c, kc, "core", "v1", resource)
 }

@@ -74,6 +74,13 @@ const docTemplate = `{
                         "description": "search daemonset by label",
                         "name": "label",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return daemonset results by item with more details, default false.",
+                        "name": "by_item",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -110,6 +117,13 @@ const docTemplate = `{
                         "description": "search deployment by label",
                         "name": "label",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return deployment results by item with more details, default false.",
+                        "name": "by_item",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -145,6 +159,13 @@ const docTemplate = `{
                         "format": "string",
                         "description": "search job by label",
                         "name": "label",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return job results by item with more details, default false.",
+                        "name": "by_item",
                         "in": "query"
                     }
                 ],
@@ -304,6 +325,13 @@ const docTemplate = `{
                         "description": "search pod by label",
                         "name": "label",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return pod results by item with more details, default false.",
+                        "name": "by_item",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -402,6 +430,13 @@ const docTemplate = `{
                         "description": "search service by label",
                         "name": "label",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return service results by item with more details, default false.",
+                        "name": "by_item",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -437,6 +472,13 @@ const docTemplate = `{
                         "format": "string",
                         "description": "search statefulset by label",
                         "name": "label",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "description": "set by_item=true to return statefulset results by item with more details, default false.",
+                        "name": "by_item",
                         "in": "query"
                     }
                 ],

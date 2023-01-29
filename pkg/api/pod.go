@@ -13,16 +13,15 @@ import (
 //	@Description	Gets the list of the pods in the k8s cluster.
 //	@Tags			Pod
 //	@Accept			json
-//	@Param			namespace	query	string	false	"pod search by namespace"	Format(string)
-//	@Param			label		query	string	false	"search pod by label"		Format(string)
+//	@Param			namespace	query	string	false	"pod search by namespace"															Format(string)
+//	@Param			label		query	string	false	"search pod by label"																Format(string)
+//	@Param			by_item		query	string	false	"set by_item=true to return pod results by item with more details, default false."	Format(string)
 //	@Produce		json
 //	@Success		200	"Sample result: "{\"namespace\":\"default\",\"number_of_pods\":0,\"pods\":[],\"status\":200}" string
 //	@Router			/api/v1/pod/list [get]
 func listPods(c *fiber.Ctx) error {
 	resource := "pods"
-	namespace := c.Query("namespace")
-	label := c.Query("label")
-	return k8s.ListResources(c, kc, "", "v1", resource, namespace, label)
+	return k8s.ListResources(c, kc, "", "v1", resource)
 }
 
 // createPodFromTemplate creates the pods from the pod template.

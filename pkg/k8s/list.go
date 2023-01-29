@@ -12,9 +12,16 @@ import (
 
 // ListResources doc
 func ListResources(c *fiber.Ctx, kc KClient, group, version,
-	resource, namespace, label string) error {
+	resource string) error {
+	namespace := c.Query("namespace")
+	label := c.Query("label")
+	byItem := c.Query("by_item")
 	if namespace == "" {
 		namespace = "default"
+	}
+
+	if byItem != "true" {
+		byItem = "false"
 	}
 
 	listOption := metav1.ListOptions{

@@ -64,6 +64,12 @@ paths:
         in: query
         name: label
         type: string
+      - description: set by_item=true to return daemonset results by item with more
+          details, default false.
+        format: string
+        in: query
+        name: by_item
+        type: string
       produces:
       - application/json
       responses:
@@ -88,6 +94,12 @@ paths:
         in: query
         name: label
         type: string
+      - description: set by_item=true to return deployment results by item with more
+          details, default false.
+        format: string
+        in: query
+        name: by_item
+        type: string
       produces:
       - application/json
       responses:
@@ -111,6 +123,12 @@ paths:
         format: string
         in: query
         name: label
+        type: string
+      - description: set by_item=true to return job results by item with more details,
+          default false.
+        format: string
+        in: query
+        name: by_item
         type: string
       produces:
       - application/json
@@ -216,6 +234,12 @@ paths:
         in: query
         name: label
         type: string
+      - description: set by_item=true to return pod results by item with more details,
+          default false.
+        format: string
+        in: query
+        name: by_item
+        type: string
       produces:
       - application/json
       responses:
@@ -281,6 +305,12 @@ paths:
         in: query
         name: label
         type: string
+      - description: set by_item=true to return service results by item with more
+          details, default false.
+        format: string
+        in: query
+        name: by_item
+        type: string
       produces:
       - application/json
       responses:
@@ -304,6 +334,12 @@ paths:
         format: string
         in: query
         name: label
+        type: string
+      - description: set by_item=true to return statefulset results by item with more
+          details, default false.
+        format: string
+        in: query
+        name: by_item
         type: string
       produces:
       - application/json
