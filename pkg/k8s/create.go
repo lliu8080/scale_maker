@@ -49,6 +49,8 @@ func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
 		"testLabel":     label,
 		"instanceName":  instanceName,
 		"namespace":     p.Namespace,
+		"image":         STRESS_TEST_IMAGE,
+		"imageTag":      STRESS_TEST_IAMGE_TAG,
 		"commandParams": p.CommandParams,
 		"cpuRequest":    p.CPURequest,
 		"memoryRequest": p.MemoryRequest,

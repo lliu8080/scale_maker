@@ -38,7 +38,7 @@ func createPodFromTemplate(c *fiber.Ctx) error {
 	resourceKind := "Pod"
 	err := k8s.ParseCreateResource(c, kc, resourceKind)
 	if err != nil {
-		c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
 			"message": err.Error(),
 		})

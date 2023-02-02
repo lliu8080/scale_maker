@@ -7,10 +7,10 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   containers:
-    - name: stress-test
-      image: nuc.lliu.ca/lliu/scale_maker:67
+    - name: iperf-test
+      image: {{ .image }}:{{ .imageTag }}
       command: ["/bin/bash"]
-      args: ["-c", "stress-ng {{ .commandParams }}"]
+      args: ["-c", "iperf {{ .commandParams }}"]
       livenessProbe:
         exec:
           command:

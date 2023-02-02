@@ -4,7 +4,7 @@
   "commandParams": "--cpu 2 --matrix 1 --mq 3 -t 5m",
   "templateName": "stress_test_job",
   "cpuRequest": "50m",
-  "memoryRequest": "100m",
+  "memoryRequest": "100Mi",
   "cpuLimit": "2",
-  "memoryLimit": "500m"
+  "memoryLimit": "500Mi"
 }
