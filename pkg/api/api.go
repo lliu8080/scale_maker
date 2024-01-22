@@ -13,20 +13,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
-// type k8sTemplates struct {
-// 	cpuLoadTestPod *yamlutil.YAMLOrJSONDecoder
-// }
-
 var kc k8s.KClient
 
 func newK8SClient() {
 	var err error
-	// config, err := rest.InClusterConfig()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// return kubernetes.NewForConfig(config)
 	kc.Ctx = context.Background()
 	config := ctrl.GetConfigOrDie()
 	kc.ClientSet, err = kubernetes.NewForConfig(config)
@@ -45,6 +35,7 @@ func InitialSetup() *fiber.App {
 	app := fiber.New(fiber.Config{
 		Prefork: conf.Prod, // go run app.go -prod
 	})
+
 	newK8SClient()
 	setupRoutesandMiddleware(app, false)
 

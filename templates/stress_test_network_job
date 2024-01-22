@@ -9,6 +9,10 @@ spec:
   parallelism: 1
   template:
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
       - name: iperf-test
         image: {{ .image }}:{{ .imageTag }}
@@ -29,6 +33,5 @@ spec:
           limits:
             cpu: "{{ .cpuLimit }}"
             memory: "{{ .memoryLimit }}"
-      securityContext: {}
       restartPolicy: Never
   ttlSecondsAfterFinished: 300

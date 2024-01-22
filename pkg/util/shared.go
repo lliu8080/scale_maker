@@ -1,12 +1,13 @@
 package util
 
 import (
-	"encoding/hex"
 	"errors"
-	"hash/fnv"
+	"math/rand"
 	"os"
 	"time"
 )
+
+const randomCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
 
 // CheckFileExists doc
 func CheckFileExists(path string) (bool, error) {
@@ -22,7 +23,8 @@ func GenerateRandomHash(length int) (string, error) {
 		return "", errors.New(
 			"Error: length of the hash must be greater than zero")
 	}
-	h := fnv.New64a()
-	h.Write([]byte(time.Now().Round(time.Hour).String()))
-	return hex.EncodeToString(h.Sum(nil))[0:length], nil
+	source := rand.NewSource(time.Now().UnixNano())
+	rng := rand.New(source)
+	hash := randomCharset[rng.Intn(len(randomCharset))+1]
+	return string(hash), nil
 }

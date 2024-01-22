@@ -1,4 +1,4 @@
-ARG go_image_version=1.19
+ARG go_image_version=1.21
 ARG almalinux_version=9
 FROM golang:$go_image_version AS build
 
@@ -13,6 +13,11 @@ RUN go mod download
 
 RUN go test ./...
 
+# If need to use venders file
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
+# RUN mkdir -p bin && \
+#	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -mod=vendor -o bin/app ./main.go
+
 # Builds the application as a staticly linked one, to allow it to run on alpine
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
 
@@ -21,7 +26,7 @@ FROM almalinux:$almalinux_version
 
 WORKDIR /app
 RUN dnf -y update
-RUN dnf -y install stress-ng iperf3
+RUN dnf -y install stress-ng iperf3 fio
 
 # Create the `public` dir and copy all the assets into it
 RUN mkdir ./assets

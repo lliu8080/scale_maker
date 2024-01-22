@@ -20,7 +20,7 @@ import (
 func createResourcesFromBody(c *fiber.Ctx) error {
 	c.Accepts("application/yaml")
 	resourceKind := ""
-	if err := k8s.CreateReourceFromData(kc, c.Body(), resourceKind); err != nil {
+	if err := k8s.CreateResourceFromData(kc, c.Body(), resourceKind); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status":  http.StatusInternalServerError,
 			"message": "Error: create k8s resources failed with error - " + err.Error() + "!",

@@ -34,7 +34,7 @@ func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
 	}
 
 	// render template with data
-	instanceName, err := util.GenerateRandomHash(6)
+	instanceName, err := util.GenerateRandomHash(8)
 	if err != nil {
 		return errors.New("Error: unable to generate instance name with error - " +
 			err.Error() + "!")
@@ -50,7 +50,6 @@ func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
 		"instanceName":  instanceName,
 		"namespace":     p.Namespace,
 		"image":         STRESS_TEST_IMAGE,
-		"imageTag":      STRESS_TEST_IAMGE_TAG,
 		"commandParams": p.CommandParams,
 		"cpuRequest":    p.CPURequest,
 		"memoryRequest": p.MemoryRequest,
@@ -58,7 +57,7 @@ func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
 		"memoryLimit":   p.MemoryLimit,
 	}
 
-	if err := CreateReourceFromTempate(
+	if err := CreateResourceFromTemplate(
 		kc, cpuLoadTestJobTemplate, data, resourceKind); err != nil {
 		return errors.New("Error: create " + resourceKind + " failed with error - " +
 			err.Error() + "!")
@@ -66,19 +65,19 @@ func ParseCreateResource(c *fiber.Ctx, kc KClient, resourceKind string) error {
 	return nil
 }
 
-// CreateReourceFromTempate - doc
-func CreateReourceFromTempate(kc KClient, templateFullPath string,
+// CreateResourceFromTemplate - doc
+func CreateResourceFromTemplate(kc KClient, templateFullPath string,
 	templateData map[string]string, resourceKind string) error {
 	resource, err := renderResourceFromTemplate(templateFullPath, templateData)
 	if err != nil {
 		log.Println("Error: can not load " + templateFullPath + "with error - " + err.Error())
 		return err
 	}
-	return CreateReourceFromData(kc, resource, resourceKind)
+	return CreateResourceFromData(kc, resource, resourceKind)
 }
 
-// CreateReourceFromData - doc
-func CreateReourceFromData(kc KClient, data []byte, resourceKind string) error {
+// CreateResourceFromData - doc
+func CreateResourceFromData(kc KClient, data []byte, resourceKind string) error {
 	resources, err := serializeResources(data, resourceKind)
 	if err != nil {
 		log.Println("Error: can not serialize the resource, error - " + err.Error())
@@ -89,10 +88,7 @@ func CreateReourceFromData(kc KClient, data []byte, resourceKind string) error {
 		return errors.New("Error: unable to read resource from data")
 	}
 	for i := 0; i < resourceNum; i++ {
-		// if err := validateReource(resources[i]); err != nil {
-		// 	return err
-		// }
-		if err := createReource(kc, resources[i]); err != nil {
+		if err := createResource(kc, resources[i]); err != nil {
 			return err
 		}
 	}
@@ -131,11 +127,7 @@ func serializeResources(data []byte, resourceKind string) ([]model.UnstructuredO
 	return objs, nil
 }
 
-// func validateReource(obj model.UnstructuredObj) error {
-// 	return nil
-// }
-
-func createReource(kc KClient, obj model.UnstructuredObj) error {
+func createResource(kc KClient, obj model.UnstructuredObj) error {
 
 	unstructuredObj := &unstructured.Unstructured{Object: obj.Obj}
 	gr, err := restmapper.GetAPIGroupResources(kc.Discovery)

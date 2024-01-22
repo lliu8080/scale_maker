@@ -29,38 +29,38 @@ func setupRoutesandMiddleware(app *fiber.App, testing bool) {
 	v1 := app.Group("/api/v1")
 
 	// namespace related APIs
-	v1.Get("/namespace/list", timeout.New(listNamespaces, timeOut*time.Second))
+	v1.Get("/namespace/list", timeout.NewWithContext(listNamespaces, timeOut*time.Second))
 
 	//node related APIs
-	v1.Get("/node/list", timeout.New(listNodes, timeOut*time.Second))
+	v1.Get("/node/list", timeout.NewWithContext(listNodes, timeOut*time.Second))
 
 	// deployment related APIs
-	v1.Get("/daemonset/list", timeout.New(listDaemonsets, timeOut*time.Second))
+	v1.Get("/daemonset/list", timeout.NewWithContext(listDaemonsets, timeOut*time.Second))
 
 	// deployment related APIs
-	v1.Get("/deployment/list", timeout.New(listDeployments, timeOut*time.Second))
+	v1.Get("/deployment/list", timeout.NewWithContext(listDeployments, timeOut*time.Second))
 
 	// pod related APIs
-	v1.Get("/pod/list", timeout.New(listPods, timeOut*time.Second))
-	v1.Post("/pod/template/create", timeout.New(createPodFromTemplate, timeOut*time.Second))
-	v1.Post("/pod/yaml/create", timeout.New(createPodFromBody, timeOut*time.Second))
+	v1.Get("/pod/list", timeout.NewWithContext(listPods, timeOut*time.Second))
+	v1.Post("/pod/template/create", timeout.NewWithContext(createPodFromTemplate, timeOut*time.Second))
+	v1.Post("/pod/yaml/create", timeout.NewWithContext(createPodFromBody, timeOut*time.Second))
 
 	// job related APIs
-	v1.Get("/job/list", timeout.New(listJobs, timeOut*time.Second))
-	v1.Post("/job/template/create", timeout.New(createJobFromTemplate, timeOut*time.Second))
-	v1.Post("/job/yaml/create", timeout.New(createJobFromBody, timeOut*time.Second))
+	v1.Get("/job/list", timeout.NewWithContext(listJobs, timeOut*time.Second))
+	v1.Post("/job/template/create", timeout.NewWithContext(createJobFromTemplate, timeOut*time.Second))
+	v1.Post("/job/yaml/create", timeout.NewWithContext(createJobFromBody, timeOut*time.Second))
 
 	// service related APIs
-	v1.Get("/service/list", timeout.New(listServices, timeOut*time.Second))
+	v1.Get("/service/list", timeout.NewWithContext(listServices, timeOut*time.Second))
 
 	// statefulset related APIs
-	v1.Get("/statefulset/list", timeout.New(listStatefulsets, timeOut*time.Second))
+	v1.Get("/statefulset/list", timeout.NewWithContext(listStatefulsets, timeOut*time.Second))
 
 	// statefulset related APIs
-	v1.Post("/bulk/create", timeout.New(createResourcesFromBody, timeOut*time.Second))
+	v1.Post("/bulk/create", timeout.NewWithContext(createResourcesFromBody, timeOut*time.Second))
 
 	// Bind handlers
-	v1.Get("/ping", timeout.New(getStatus, timeOut*time.Second))
+	v1.Get("/ping", timeout.NewWithContext(getStatus, timeOut*time.Second))
 
 	app.Static("/favicon.ico", "./assets/static/img/favicon.ico")
 	app.Get("/docs/*", swagger.HandlerDefault)

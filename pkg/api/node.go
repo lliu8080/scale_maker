@@ -39,7 +39,6 @@ func listNodes(c *fiber.Ctx) error {
 	ns := make(map[string]map[string]string)
 	for _, node := range nList.Items {
 		nConditions := make(map[string]string)
-		//ns[node.Name] = make(map[string]string)
 		for _, condition := range node.Status.Conditions {
 			nConditions[string(condition.Type)] = string(condition.Status)
 		}

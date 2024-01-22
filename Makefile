@@ -1,10 +1,11 @@
 APP_NAME=scale_maker
-APP_VERSION=0.0.1
+APP_VERSION=0.0.2
 NUC_DOCKER_REGISTRY=nuc.lliu.ca
 
 build:
 	go build  ./main.go
 doc:
+	swag fmt
 	swag init
 run:
 	go run ./main.go
@@ -29,3 +30,5 @@ localtest:
 	docker-compose up
 localtest_down:
 	docker-compose down
+vendor:
+	go mod vendor

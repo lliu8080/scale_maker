@@ -6,6 +6,10 @@ metadata:
   name: stress-test-pod-{{ .instanceName }}
   namespace: {{ .namespace }}
 spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
   containers:
     - name: stress-test
       image: {{ .image }}:{{ .imageTag }}
@@ -26,5 +30,4 @@ spec:
         limits:
           cpu: "{{ .cpuLimit }}"
           memory: "{{ .memoryLimit }}"
-      securityContext: {}
   restartPolicy: Never

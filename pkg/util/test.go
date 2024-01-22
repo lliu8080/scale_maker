@@ -42,18 +42,23 @@ func RunAPITests(t *testing.T, app *fiber.App, tests *[]APITest) {
 			err      error
 			header   string
 		)
+
 		if test.RequestBodyFromFile != "" {
+			// tests need to load test files
 			if strings.Contains(test.RequestBodyFromFile, ".yaml") {
+				// process yaml test files
 				testData, err = ioutil.ReadFile(test.RequestBodyFromFile)
 				data, err = yaml.YAMLToJSONStrict(testData)
 				header = "application/yaml"
 			} else {
+				// process json test files
 				testData, err = ioutil.ReadFile(test.RequestBodyFromFile)
 				err = json.Unmarshal(testData, &tmp)
 				data, err = json.Marshal(tmp)
 				header = "application/json"
 			}
 		} else {
+			// tests don't need to load test files
 			data, _ = json.Marshal(test.RequestBodyFromFile)
 			header = "application/json"
 		}
@@ -63,10 +68,11 @@ func RunAPITests(t *testing.T, app *fiber.App, tests *[]APITest) {
 			test.Route,
 			bytes.NewBuffer(data),
 		)
+
 		req.Header.Set("Content-type", header)
 		res, err := app.Test(req, -1)
 
-		// verify that no error occured, that is not expected
+		// verify that no error occurred, that is not expected
 		assert.Equalf(t, test.ExpectedError, err != nil, test.Description)
 
 		// As expected errors lead to broken responses, the next
@@ -81,11 +87,11 @@ func RunAPITests(t *testing.T, app *fiber.App, tests *[]APITest) {
 		// Read the response body
 		body, err := ioutil.ReadAll(res.Body)
 
-		// Reading the response body should work everytime, such that
+		// Reading the response body should work every time, such that
 		// the err variable should be nil
 		assert.Nilf(t, err, test.Description)
 
-		// Verify, that the reponse body equals the expected body
+		// Verify, that the response body equals the expected body
 		assert.Equalf(t, test.ExpectedBody, string(body), test.Description)
 	}
 }
